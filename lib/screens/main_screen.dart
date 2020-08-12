@@ -1,5 +1,5 @@
 import 'package:BhansaGhar/screens/profile.dart';
-import 'package:BhansaGhar/screens/sidebar/navdrawer.dart';
+import 'package:BhansaGhar/screens/navdrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:BhansaGhar/Assets/my_flutter_app_icons.dart';
 

@@ -15,7 +15,8 @@ class OrderPage extends StatefulWidget {
 
 class _OrderPageState extends State<OrderPage> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
+   // final counterModel = Provider.of<Counter>(context);
     final cart = Provider.of<Cart>(context);
     final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
@@ -46,7 +47,8 @@ class _OrderPageState extends State<OrderPage> {
                       cart.items.values.toList()[i].price,
                       cart.items.values.toList()[i].quantity,
                       cart.items.values.toList()[i].title,
-                      cart.items.values.toList()[i].image),
+                      cart.items.values.toList()[i].image,
+                     ),
                 ),
                 padding: EdgeInsets.symmetric(
                   horizontal: 10.0,
@@ -68,7 +70,7 @@ class _OrderPageState extends State<OrderPage> {
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
                   )),
-              trailing: Text('',
+              trailing: Text('Rs. 500',
                   style: TextStyle(
                     fontSize: 18.0,
                   )),

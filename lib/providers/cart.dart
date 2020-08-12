@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'counter.dart';
 
@@ -9,6 +8,7 @@ class CartItem {
   final int quantity;
   final double price;
   final String image;
+  
 
   CartItem({
     @required this.id,
@@ -16,6 +16,7 @@ class CartItem {
     @required this.quantity,
     @required this.price,
     @required this.image,
+    
   });
 }
 
@@ -31,14 +32,10 @@ class Cart with ChangeNotifier {
     return _items == null ? 0 : _items.length;
   }
 
-  double perItemTotalAmount(int counter) {
-    var total = 0.0;
-    _items.forEach((key, cartItem) {
-        total = cartItem.price;
-      total += cartItem.price * counter;
-    });
-    return total;
-  }
+  
+ 
+
+  
 
   void addItem(String productid, double price, String title, String image) {
     if (_items.containsKey(productid)) {
@@ -70,6 +67,10 @@ class Cart with ChangeNotifier {
    
     _items.remove(productId);
     notifyListeners();
+  }
+
+  void itemTotal(int counter){
+  
   }
 
   void removeSingleItem(String productId){

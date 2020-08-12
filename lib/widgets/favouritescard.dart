@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-//provider
-import 'package:BhansaGhar/providers/counter.dart';
-import 'package:BhansaGhar/providers/cart.dart';
-
-class OrderCard extends StatelessWidget {
- // final int counter = 0;
-  final String id;
+class FavouritesCard extends StatelessWidget {
+   final String id;
   final String productId;
   final double price;
   final int quantity;
   final String title;
   final String image;
-  
 
-  OrderCard(this.id, this.productId, this.price, this.quantity, this.title,
+  FavouritesCard(this.id, this.productId, this.price, this.quantity, this.title,
       this.image);
   @override
   Widget build(BuildContext context) {
-    final counterModel = Provider.of<Counter>(context);
-    final cart = Provider.of<Cart>(context);
-    final String total = (price * counterModel.getCounter()).toString();
     return Dismissible(
       key: ValueKey(id),
       background: Container(
@@ -64,50 +54,14 @@ class OrderCard extends StatelessWidget {
                 ));
       },
       onDismissed: (direction) {
-        Provider.of<Cart>(context, listen: false).removeItems(productId);
+     //   Provider.of<Cart>(context, listen: false).removeItems(productId);
       },
           child: Card(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                height: 75.0,
-                width: 45.0,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2.0, color: Colors.yellow[700]),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    InkWell(
-                      onTap: () {counterModel.incrementCounter();},
-                      child: Icon(
-                        Icons.keyboard_arrow_up,
-                        color: Colors.yellow[700],
-                      ),
-                    ),
-                    Text(
-                      counterModel.getCounter().toString(),
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {counterModel.decrementCounter();},
-                      child: Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Colors.yellow[700],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
+            children: <Widget>[             
               Container(
                 height: 75.0,
                 width: 75.0,
@@ -141,7 +95,7 @@ class OrderCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height:5.0),
-                 Text('Total: Rs.''${total}'),
+                 // Text('Total: Rs.''${(price * counterModel.getCounter()).toString()}'),
                 // Text('Total: RS.''${cart.perItemTotalAmount(counterModel.getCounter())}')
                 ],
               ),

@@ -35,7 +35,7 @@ class Foodproducts with ChangeNotifier{
     address: 'Pulchowk',
     image: 'assets/images/food1.jpg',
     category: ['All','Breakfast'],
-    price: 100.0,
+    price: 70.0,
     rating: 99.0,
   ),
    Foodproduct(
@@ -46,7 +46,7 @@ class Foodproducts with ChangeNotifier{
     address: 'Kalanki',
     image: 'assets/images/food1.jpg',
     category: ['All','Breakfast'],
-    price: 100.0,
+    price: 80.0,
     rating: 99.0,
   ),
 ];

@@ -16,7 +16,7 @@ class ItemDetail extends StatefulWidget {
 }
 
 class _ItemDetailState extends State<ItemDetail> {
-  static const routeName = '/item-detail';
+ // static const routeName = '/item-detail';
 
   @override
   Widget build(BuildContext context) {
