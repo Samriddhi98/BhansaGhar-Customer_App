@@ -1,3 +1,4 @@
+import 'package:BhansaGhar/providers/favourites.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ class _MenuItemState extends State<MenuItem> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Foodproduct>(context, listen: false);
+    final likedFood = Provider.of<Favourites>(context);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -64,6 +66,7 @@ class _MenuItemState extends State<MenuItem> {
                               : Icons.favorite_border),
                           onPressed: () {
                             product.toggleFavouriteStatus();
+                        
                           }),
                     ),
                   ),

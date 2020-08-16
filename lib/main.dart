@@ -1,5 +1,6 @@
 import 'package:BhansaGhar/providers/cart.dart';
-import 'package:BhansaGhar/screens/favorites.dart';
+import 'package:BhansaGhar/providers/favourites.dart';
+import 'package:BhansaGhar/screens/favourites_page.dart';
 import 'package:BhansaGhar/screens/itemdetail.dart';
 import 'package:BhansaGhar/screens/order_page.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
           value: locator<Cart>(),
         ),
+        ChangeNotifierProvider.value(
+          value: Favourites())
 
       ],
       child: MaterialApp(

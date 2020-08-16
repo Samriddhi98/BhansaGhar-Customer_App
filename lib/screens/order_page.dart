@@ -70,7 +70,8 @@ class _OrderPageState extends State<OrderPage> {
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
                   )),
-              trailing: Text("Rs. ${total.toString()}",
+              trailing: // Text("Rs. ${total.toString()}",
+              Text("Rs. ${total.toString()}",
                   style: TextStyle(
                     fontSize: 18.0,
                   )),

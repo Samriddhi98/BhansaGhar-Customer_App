@@ -1,10 +1,16 @@
+
 import 'package:BhansaGhar/widgets/favouritescard.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+//providers
+import 'package:BhansaGhar/providers/favourites.dart';
 
 class Myfavorites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+    final likedFood = Provider.of<Favourites>(context);
     return Scaffold(
         appBar: AppBar(
         title: Text(
@@ -23,8 +29,14 @@ class Myfavorites extends StatelessWidget {
             width: deviceSize.width,
             //     color: Colors.red,
               child: ListView.builder(
-                itemCount: 2,
-               // itemBuilder: (ctx, i) => FavouritesCard(),
+                itemCount: likedFood.items.length,
+               itemBuilder: (ctx, i) => FavouritesCard(
+                 likedFood.items[i].id,
+                  likedFood.items[i].price,
+                  likedFood.items[i].title,
+                  likedFood.items[i].chefname,
+                  likedFood.items[i].image,
+               ),
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 10.0,
                                 ),

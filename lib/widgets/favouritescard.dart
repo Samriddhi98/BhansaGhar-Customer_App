@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 class FavouritesCard extends StatelessWidget {
    final String id;
-  final String productId;
   final double price;
-  final int quantity;
   final String title;
+  final String chefname;
   final String image;
 
-  FavouritesCard(this.id, this.productId, this.price, this.quantity, this.title,
+  FavouritesCard(this.id,this.price, this.title, this.chefname,
       this.image);
   @override
   Widget build(BuildContext context) {

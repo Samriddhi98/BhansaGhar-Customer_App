@@ -153,7 +153,19 @@ class _ItemDetailState extends State<ItemDetail> {
                       onTap: () {
                              cart.addItem(loadedFood.id, loadedFood.price, loadedFood.title,
                                 loadedFood.image);
-                             cart.getTotalPrice();
+                            cart.getTotalPrice();
+                            Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Added item to Cart'),
+                              duration: Duration(seconds: 2),
+                              action: SnackBarAction(
+                                  label: 'UNDO',
+                                  textColor: Colors.white,
+                                  onPressed: () {
+                                    cart.removeSingleItem(loadedFood.id);
+                                  }),
+                            ),
+                          );
                           },
                                           child: Material(
                         borderRadius: BorderRadius.circular(20.0),

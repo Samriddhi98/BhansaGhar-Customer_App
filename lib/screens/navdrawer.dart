@@ -1,8 +1,12 @@
+import 'package:BhansaGhar/providers/favourites.dart';
+import 'package:BhansaGhar/providers/foodproduct.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NavDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+   
     return Drawer(
       child: Column(
         children: <Widget>[
@@ -67,7 +71,9 @@ class NavDrawer extends StatelessWidget {
                     leading: Icon(Icons.favorite),
                     title: Text("My favourites"),
                     onTap: () {
+                        
                         Navigator.of(context).pushNamed('/favourites');
+
                     },
                   ),
                   ListTile(

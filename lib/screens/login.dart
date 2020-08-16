@@ -48,7 +48,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       child: TextFormField(
                         decoration: InputDecoration(
-                          hintText: "E-mail",
+                          hintText: "Username or email",
                           prefixIcon: Icon(Icons.mail_outline),
                           border: InputBorder.none,
                         ),
