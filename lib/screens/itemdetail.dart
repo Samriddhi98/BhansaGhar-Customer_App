@@ -86,6 +86,7 @@ class _ItemDetailState extends State<ItemDetail> {
                         )
                       ],
                     ),
+<<<<<<< HEAD
                     SizedBox(height: 10.0),
                     Container(
                       padding: EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
@@ -181,6 +182,43 @@ class _ItemDetailState extends State<ItemDetail> {
                                       fontWeight: FontWeight.bold,
                                     ))),
                             
+=======
+                  ),
+                  SizedBox(height: 5.0),
+                  Container(
+                    height: 40.0,
+                    width: 350.0,
+                    child: GestureDetector(
+                      onTap: () {
+                             cart.addItem(loadedFood.id, loadedFood.price, loadedFood.title,
+                                loadedFood.image);
+                            cart.getTotalPrice();
+                            Scaffold.of(context).hideCurrentSnackBar();
+                            Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Added item to Cart'),
+                              duration: Duration(seconds: 2),
+                              action: SnackBarAction(
+                                  label: 'UNDO',
+                                  textColor: Colors.white,
+                                  onPressed: () {
+                                    cart.removeSingleItem(loadedFood.id);
+                                  }),
+                            ),
+                          );
+                          },
+                                          child: Material(
+                        borderRadius: BorderRadius.circular(20.0),
+                        shadowColor: Colors.black87,
+                        color: Colors.yellow[700],
+                        elevation: 7.0,
+                          child: Center(
+                              child: Text('ADD TO CART',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ))),
+>>>>>>> 5ccb959d56f98dc776b587e36731f983e5728b56
                           
                         ),
                       ),
