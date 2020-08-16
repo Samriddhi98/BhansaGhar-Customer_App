@@ -15,10 +15,11 @@ class OrderPage extends StatefulWidget {
 
 class _OrderPageState extends State<OrderPage> {
   @override
-  Widget build(BuildContext context) { 
-   // final counterModel = Provider.of<Counter>(context);
+  Widget build(BuildContext context) {
+    // final counterModel = Provider.of<Counter>(context);
     final cart = Provider.of<Cart>(context);
     final deviceSize = MediaQuery.of(context).size;
+    int total = cart.totalPrice;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -37,25 +38,24 @@ class _OrderPageState extends State<OrderPage> {
             height: 300.0,
             width: deviceSize.width,
             //     color: Colors.red,
-              child: ListView.builder(
-                itemCount: cart.items.length,
-                itemBuilder: (ctx, i) => ChangeNotifierProvider<Counter>(
-                  create: (context) => Counter(),
-                                  child: OrderCard(
-                      cart.items.values.toList()[i].id,
-                      cart.items.keys.toList()[i],
-                      cart.items.values.toList()[i].price,
-                      cart.items.values.toList()[i].quantity,
-                      cart.items.values.toList()[i].title,
-                      cart.items.values.toList()[i].image,
-                     ),
+            child: ListView.builder(
+              itemCount: cart.items.length,
+              itemBuilder: (ctx, i) => ChangeNotifierProvider<Counter>(
+                create: (context) => Counter(),
+                child: OrderCard(
+                  cart.items.values.toList()[i].id,
+                  cart.items.keys.toList()[i],
+                  cart.items.values.toList()[i].price,
+                  cart.items.values.toList()[i].quantity,
+                  cart.items.values.toList()[i].title,
+                  cart.items.values.toList()[i].image,
                 ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                ),
-                scrollDirection: Axis.vertical,
               ),
-            
+              padding: EdgeInsets.symmetric(
+                horizontal: 10.0,
+              ),
+              scrollDirection: Axis.vertical,
+            ),
           ),
           SizedBox(
             height: 5.0,
@@ -70,7 +70,7 @@ class _OrderPageState extends State<OrderPage> {
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
                   )),
-              trailing: Text('Rs. 500',
+              trailing: Text("Rs. ${total.toString()}",
                   style: TextStyle(
                     fontSize: 18.0,
                   )),

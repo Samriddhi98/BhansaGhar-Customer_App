@@ -1,22 +1,20 @@
+import 'package:BhansaGhar/providers/cart.dart';
+import 'package:BhansaGhar/providers/counter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-//provider
-import 'package:BhansaGhar/providers/counter.dart';
-import 'package:BhansaGhar/providers/cart.dart';
-
 class OrderCard extends StatelessWidget {
- // final int counter = 0;
+  // final int counter = 0;
   final String id;
   final String productId;
   final double price;
   final int quantity;
   final String title;
   final String image;
-  
 
   OrderCard(this.id, this.productId, this.price, this.quantity, this.title,
       this.image);
+
   @override
   Widget build(BuildContext context) {
     final counterModel = Provider.of<Counter>(context);
@@ -66,7 +64,7 @@ class OrderCard extends StatelessWidget {
       onDismissed: (direction) {
         Provider.of<Cart>(context, listen: false).removeItems(productId);
       },
-          child: Card(
+      child: Card(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           child: Row(
@@ -82,7 +80,10 @@ class OrderCard extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     InkWell(
-                      onTap: () {counterModel.incrementCounter();},
+                      onTap: () {
+                        cart.increaseTotalFromCounter(price: price);
+                        counterModel.incrementCounter();
+                      },
                       child: Icon(
                         Icons.keyboard_arrow_up,
                         color: Colors.yellow[700],
@@ -96,7 +97,10 @@ class OrderCard extends StatelessWidget {
                       ),
                     ),
                     InkWell(
-                      onTap: () {counterModel.decrementCounter();},
+                      onTap: () {
+                        cart.decreaseTotalFromCounter(price: price,counter: counterModel.getCounter());
+                        counterModel.decrementCounter();
+                      },
                       child: Icon(
                         Icons.keyboard_arrow_down,
                         color: Colors.yellow[700],
@@ -113,8 +117,7 @@ class OrderCard extends StatelessWidget {
                 width: 75.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(image),
-                      fit: BoxFit.cover),
+                      image: AssetImage(image), fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(37.0),
                   boxShadow: [
                     BoxShadow(
@@ -131,27 +134,28 @@ class OrderCard extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     title,
-                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 5.0),
                   Text(
-                   'Rs.' '${price.toString()}',
+                    'Rs.' '${price.toString()}',
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
                   ),
-                  SizedBox(height:5.0),
-                 Text('Total: Rs.''${total}'),
-                // Text('Total: RS.''${cart.perItemTotalAmount(counterModel.getCounter())}')
+                  SizedBox(height: 5.0),
+                  Text('Total: Rs.' '${total}'),
+                  // Text('Total: RS.''${cart.perItemTotalAmount(counterModel.getCounter())}')
                 ],
               ),
               Spacer(),
               InkWell(
-                            child: Icon(
+                child: Icon(
                   Icons.cancel,
                   color: Colors.grey,
                 ),
-                onTap: (){},
+                onTap: () {},
               )
             ],
           ),
