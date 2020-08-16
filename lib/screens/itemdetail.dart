@@ -154,6 +154,7 @@ class _ItemDetailState extends State<ItemDetail> {
                              cart.addItem(loadedFood.id, loadedFood.price, loadedFood.title,
                                 loadedFood.image);
                             cart.getTotalPrice();
+                            Scaffold.of(context).hideCurrentSnackBar();
                             Scaffold.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Added item to Cart'),
