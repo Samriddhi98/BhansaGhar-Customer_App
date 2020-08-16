@@ -153,6 +153,7 @@ class _ItemDetailState extends State<ItemDetail> {
                       onTap: () {
                              cart.addItem(loadedFood.id, loadedFood.price, loadedFood.title,
                                 loadedFood.image);
+                             cart.getTotalPrice();
                           },
                                           child: Material(
                         borderRadius: BorderRadius.circular(20.0),
