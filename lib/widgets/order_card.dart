@@ -56,10 +56,13 @@ class OrderCard extends StatelessWidget {
                       child: Text('Yes'),
                       onPressed: () {
                         Navigator.of(ctx).pop(true);
+
+                  
                       },
                     ),
                   ],
-                ));
+                )
+                );
       },
       onDismissed: (direction) {
         Provider.of<Cart>(context, listen: false).removeItems(productId);

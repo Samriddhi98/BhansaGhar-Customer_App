@@ -90,6 +90,7 @@ class Cart with ChangeNotifier {
   void removeItems(String productId) {
    
     _items.remove(productId);
+    getTotalPrice();
     notifyListeners();
   }
 

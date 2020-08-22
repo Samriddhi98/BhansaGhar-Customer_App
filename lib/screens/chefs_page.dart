@@ -8,8 +8,13 @@ class ChefPage extends StatefulWidget {
 class _ChefPageState extends State<ChefPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child:Text('ChefPage'),
+    return WillPopScope(
+      onWillPop: (){
+        Navigator.of(context).pushNamed('/main-screen');
+      },
+          child: Center(
+        child:Text('ChefPage'),
+      ),
     );
   }
 }

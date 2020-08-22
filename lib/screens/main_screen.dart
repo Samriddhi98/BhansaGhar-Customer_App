@@ -1,4 +1,4 @@
-import 'package:BhansaGhar/screens/profile.dart';
+
 import 'package:BhansaGhar/screens/navdrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:BhansaGhar/Assets/my_flutter_app_icons.dart';
@@ -7,6 +7,7 @@ import 'package:BhansaGhar/Assets/my_flutter_app_icons.dart';
 import 'package:BhansaGhar/screens/menu_screen.dart';
 import 'package:BhansaGhar/screens/order_page.dart';
 import 'package:BhansaGhar/screens/chefs_page.dart';
+import 'package:BhansaGhar/screens/profile.dart';
 
 class MainScreen extends StatefulWidget {
   @override
