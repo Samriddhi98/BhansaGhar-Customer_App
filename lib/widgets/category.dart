@@ -1,3 +1,5 @@
+import 'package:BhansaGhar/providers/foodproduct.dart';
+import 'package:BhansaGhar/widgets/menuitem_list.dart';
 import 'package:flutter/material.dart';
 
 //data
@@ -5,6 +7,7 @@ import 'package:BhansaGhar/providers/category_data.dart';
 
 //model
 import 'package:BhansaGhar/models/category_model.dart';
+import 'package:provider/provider.dart';
 
 import 'category_card.dart';
 
@@ -17,17 +20,18 @@ class Category extends StatelessWidget {
     return Container(
       width: deviceSize.width,
       height: 120.0,
-      margin: EdgeInsets.only(top: 10.0,bottom:20.0),
-        // color: Colors.redAccent,
+      margin: EdgeInsets.only(top: 10.0, bottom: 20.0),
+      // color: Colors.redAccent,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding
-          (
-            padding:EdgeInsets.only(left:5.0),
-      child: Text('What we serve',style: TextStyle(fontWeight: FontWeight.bold,fontSize:15.0),)),
-        
+          Padding(
+              padding: EdgeInsets.only(left: 5.0),
+              child: Text(
+                'What we serve',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+              )),
           Container(
             height: 100.0,
             child: ListView.builder(
@@ -41,7 +45,6 @@ class Category extends StatelessWidget {
               },
             ),
           ),
-          
         ],
       ),
     );

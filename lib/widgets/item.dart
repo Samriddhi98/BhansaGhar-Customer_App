@@ -20,12 +20,12 @@ class _MenuItemState extends State<MenuItem> {
   Widget build(BuildContext context) {
     final product = Provider.of<Foodproduct>(context, listen: false);
     final likedFood = Provider.of<Favourites>(context);
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (context) => Foodproducts(),
         ),
-       
       ],
       child: GestureDetector(
         onTap: () {
@@ -42,8 +42,11 @@ class _MenuItemState extends State<MenuItem> {
                   height: 200.0,
                   width: 380.0,
                   // color: Colors.red,
-                  child: Image.asset(
-                    product.image,
+                  child: Image.network(
+                    //
+                    // "https://bhansagharapi.herokuapp.com/uploads/1610691856671-images%20(2).jpg",
+
+                    "https://bhansagharapi.herokuapp.com/uploads/${product.image}",
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -66,7 +69,6 @@ class _MenuItemState extends State<MenuItem> {
                               : Icons.favorite_border),
                           onPressed: () {
                             product.toggleFavouriteStatus();
-                        
                           }),
                     ),
                   ),

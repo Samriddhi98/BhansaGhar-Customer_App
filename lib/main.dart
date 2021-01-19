@@ -1,5 +1,7 @@
 import 'package:BhansaGhar/providers/cart.dart';
 import 'package:BhansaGhar/providers/favourites.dart';
+import 'package:BhansaGhar/providers/foodproduct.dart';
+import 'package:BhansaGhar/screens/checkout.dart';
 import 'package:BhansaGhar/screens/favourites_page.dart';
 import 'package:BhansaGhar/screens/itemdetail.dart';
 import 'package:BhansaGhar/screens/order_page.dart';
@@ -15,8 +17,8 @@ import 'package:BhansaGhar/screens/signup.dart';
 import 'locator.dart';
 
 void main() {
-initLocator();
-runApp(MyApp());
+  initLocator();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -26,15 +28,17 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: Foodproducts(),
-          ),
-          ChangeNotifierProvider.value(
+        ),
+        ChangeNotifierProvider.value(
           value: locator<Cart>(),
         ),
         ChangeNotifierProvider.value(
-          value: Favourites())
-
+          value: FoodProductsList(),
+        ),
+        ChangeNotifierProvider.value(value: Favourites())
       ],
       child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'MyShop',
           theme: ThemeData(
             primaryColor: Colors.yellow[700],
@@ -48,9 +52,10 @@ class MyApp extends StatelessWidget {
             '/login': (BuildContext context) => new AuthScreen(),
             '/menu-screen': (BuildContext context) => new MenuPage(),
             '/main-screen': (BuildContext context) => new MainScreen(),
-            '/item-detail':(BuildContext context) => new ItemDetail(),
-            '/orderpage' : (BuildContext context) => new OrderPage(),
-            '/favourites':(BuildContext context) => new Myfavorites(),
+            '/item-detail': (BuildContext context) => new ItemDetail(),
+            '/orderpage': (BuildContext context) => new OrderPage(),
+            '/favourites': (BuildContext context) => new Myfavorites(),
+            '/checkout': (BuildContext context) => new CheckoutPage(),
           }),
     );
   }

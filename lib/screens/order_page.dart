@@ -7,6 +7,7 @@ import 'package:BhansaGhar/widgets/order_card.dart';
 
 //providers
 import 'package:BhansaGhar/providers/counter.dart';
+import 'checkout.dart';
 
 class OrderPage extends StatefulWidget {
   @override
@@ -106,7 +107,7 @@ class _OrderPageState extends State<OrderPage> {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).pushNamed('/main-screen');
+                Navigator.of(context).pushNamed('/checkout');
               },
             ),
           ],

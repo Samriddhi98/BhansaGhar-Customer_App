@@ -1,4 +1,10 @@
+import 'package:BhansaGhar/Api/ApiService.dart';
+import 'package:BhansaGhar/models/loginmodel.dart';
+import 'package:BhansaGhar/models/registermodel.dart';
+import 'package:BhansaGhar/screens/main_screen.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'menu_screen.dart';
 
@@ -9,12 +15,22 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final formKey = GlobalKey<FormState>();
+  final scaffoldkey = GlobalKey<ScaffoldState>();
+  TextEditingController email = TextEditingController(),
+      password = TextEditingController();
   bool _togglevisibility = true;
+  saveTopref(String token) async {
+    var preference = await SharedPreferences.getInstance();
+    preference.setString("token", token);
+    // String a = preference.getString("token");
+    // print(a);
+  }
 
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
+      key: scaffoldkey,
       resizeToAvoidBottomPadding: false,
       body: Column(
         children: <Widget>[
@@ -39,6 +55,7 @@ class _AuthScreenState extends State<AuthScreen> {
             width: deviceSize.width,
             color: Colors.white,
             child: Form(
+              key: formKey,
               child: Column(
                 children: <Widget>[
                   Card(
@@ -47,6 +64,18 @@ class _AuthScreenState extends State<AuthScreen> {
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: TextFormField(
+                        validator: (value) {
+                          if (value.isNotEmpty) {
+                            // print(value);
+                            // bool valid = EmailValidator.validate(value);
+                            // print(valid);
+                            // if (!valid) {
+                            //   return "Email is invalid";
+                            // }
+                          } else {
+                            return "Email cannot be empty";
+                          }
+                        },
                         decoration: InputDecoration(
                           hintText: "Username or email",
                           prefixIcon: Icon(Icons.mail_outline),
@@ -60,6 +89,11 @@ class _AuthScreenState extends State<AuthScreen> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Password required";
+                        }
+                      },
                       decoration: InputDecoration(
                         hintText: "Password",
                         prefixIcon: Icon(Icons.vpn_key),
@@ -105,7 +139,7 @@ class _AuthScreenState extends State<AuthScreen> {
             height: 40.0,
             width: 350.0,
             child: GestureDetector(
-                          child: Material(
+              child: Material(
                 borderRadius: BorderRadius.circular(20.0),
                 shadowColor: Colors.black87,
                 color: Colors.black,
@@ -117,9 +151,28 @@ class _AuthScreenState extends State<AuthScreen> {
                           fontWeight: FontWeight.bold,
                         ))),
               ),
-               onTap: () {
-                  Navigator.of(context).pushNamed('/main-screen');
-                },
+              onTap: () {
+                if (formKey.currentState.validate()) {
+                  LoginModel loginModel =
+                      LoginModel(email: email.text, password: password.text);
+                  ApiService().postUsers(loginModel).then((value) {
+                    if (value.statusCode == 200) {
+                      saveTopref(value.data['token']);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => MainScreen()));
+                    } else if (value.statusCode == 400) {
+                      print("gftyrugr");
+                      print(value.data['error']);
+                      scaffoldkey.currentState.showSnackBar(SnackBar(
+                        content: Text(value.data['error']),
+                        backgroundColor: Colors.red,
+                      ));
+                    }
+                  });
+                } else {
+                  print("not validated");
+                }
+              },
             ),
           ),
           SizedBox(height: 20.0),
@@ -162,6 +215,7 @@ class _AuthScreenState extends State<AuthScreen> {
               InkWell(
                 onTap: () {
                   // Navigator.of(context).pushNamed('/sign-up');
+
                   Navigator.of(context).pushReplacementNamed('/sign-up');
                 },
                 child: Text(
