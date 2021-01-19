@@ -1,3 +1,6 @@
+import 'package:BhansaGhar/Api/ApiService.dart';
+import 'package:BhansaGhar/models/registermodel.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -7,10 +10,16 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   bool _togglevisibility = true;
-
+  RegisterModel registerModel;
+  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  TextEditingController username = TextEditingController(),
+      email = TextEditingController(),
+      password = TextEditingController(),
+      reEnterpassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Column(
@@ -36,6 +45,7 @@ class _SignUpState extends State<SignUp> {
             width: deviceSize.width,
             color: Colors.white,
             child: Form(
+              key: _formkey,
               child: Column(
                 children: <Widget>[
                   Card(
@@ -44,6 +54,7 @@ class _SignUpState extends State<SignUp> {
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: TextFormField(
+                        controller: username,
                         decoration: InputDecoration(
                           hintText: "Username",
                           prefixIcon: Icon(Icons.person_pin),
@@ -56,42 +67,54 @@ class _SignUpState extends State<SignUp> {
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: TextFormField(
+                        validator: (value) {
+                          //bool valid = EmailValidator.validate(value);
+                          //print(valid);
+                          //if (!valid) {
+                            //return "Email is invalid";
+                          //}
+                        },
+                        controller: email,
                         decoration: InputDecoration(
                           hintText: "E-mail",
                           prefixIcon: Icon(Icons.mail_outline),
                           border: InputBorder.none,
                         ),
                       )),
-               //   SizedBox(height: 15.0),
+                  //   SizedBox(height: 15.0),
                   Card(
                     elevation: 10.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: TextFormField(
+                      controller: password,
                       decoration: InputDecoration(
                         hintText: "Password",
                         prefixIcon: Icon(Icons.vpn_key),
                         border: InputBorder.none,
-                        suffixIcon:
-                            IconButton(
-                              onPressed: (){
-                                setState(() {
-                                  _togglevisibility = !_togglevisibility;
-                                });
-                              },
-                              icon: _togglevisibility ? Icon(Icons.visibility_off): Icon(Icons.visibility),),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _togglevisibility = !_togglevisibility;
+                            });
+                          },
+                          icon: _togglevisibility
+                              ? Icon(Icons.visibility_off)
+                              : Icon(Icons.visibility),
+                        ),
                       ),
                       obscureText: _togglevisibility,
                     ),
                   ),
-               //   SizedBox(height: 15.0),
+                  //   SizedBox(height: 15.0),
                   Card(
                     elevation: 10.0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: TextField(
+                      controller: reEnterpassword,
                       decoration: InputDecoration(
                         hintText: "Re-enter Password",
                         prefixIcon: Icon(Icons.vpn_key),
@@ -124,7 +147,24 @@ class _SignUpState extends State<SignUp> {
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ))),
-                onTap: () {},
+                onTap: () {
+                  if (_formkey.currentState.validate()) {
+                    registerModel = RegisterModel(
+                        username: username.text,
+                        email: email.text,
+                        password: password.text);
+                    ApiService().postUser(registerModel).then((value) {
+                      if (value.statusCode == 200) {
+                         Navigator.pop(context);
+                      } else if (value.statusCode == 400) {
+                        print("eereafsdfasdfadsf");
+                        print(value.data['error']);
+                      }
+                    });
+                  } else {
+                    print("not validated");
+                  }
+                },
               ),
             ),
           ),

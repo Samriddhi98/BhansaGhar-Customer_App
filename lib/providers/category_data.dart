@@ -1,16 +1,17 @@
 import 'package:BhansaGhar/models/category_model.dart';
+import 'package:flutter/cupertino.dart';
 
 final categories = [
    CategoryItems(
     categoryName: 'All',
-    imagePath: 'assets/images/noodles.png'
+    imagePath: 'assets/images/noodles.png',
   ),
   CategoryItems(
-    categoryName: 'Non Veg',
+    categoryName: 'non-veg',
     imagePath: 'assets/images/chicken_leg.png'
   ),
   CategoryItems(
-    categoryName: 'Veg',
+    categoryName: 'veg',
     imagePath: 'assets/images/broccoli.png'
   ),
   CategoryItems(

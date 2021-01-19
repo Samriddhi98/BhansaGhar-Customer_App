@@ -1,7 +1,14 @@
 import 'package:BhansaGhar/providers/favourites.dart';
 import 'package:BhansaGhar/providers/foodproduct.dart';
+import 'package:BhansaGhar/screens/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'order_page.dart';
+import 'orderhistory.dart';
+import 'faqpage.dart';
+import 'contact.dart';
+import 'aboutus.dart';
 
 class NavDrawer extends StatelessWidget {
   @override
@@ -80,28 +87,36 @@ class NavDrawer extends StatelessWidget {
                     leading: Icon(Icons.room_service),
                     title: Text("Order History"),
                     onTap: () {
-                      //  Navigator.of(context).pushNamed('/order');
+                       Navigator.of(context).push(
+                         MaterialPageRoute
+                         (builder: (context) => OrderHistory()));
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.forum),
                     title: Text("FAQ"),
                     onTap: () {
-                      //   Navigator.of(context).pushNamed('/faq');
+                         Navigator.of(context).push(
+                         MaterialPageRoute
+                         (builder: (context) => FaqPage()));
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.view_list),
-                    title: Text("Terms & Conditions"),
+                    title: Text("Contact Us"),
                     onTap: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => ContactPage())
+                      );
                     },
                   ),
                   ListTile(
                     leading: Icon(Icons.info),
                     title: Text("About Us"),
                     onTap: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => AboutPage())
+                      );
                     },
                   ),
                   // List items goes here...

@@ -16,13 +16,14 @@ class ItemDetail extends StatefulWidget {
 }
 
 class _ItemDetailState extends State<ItemDetail> {
- // static const routeName = '/item-detail';
+  // static const routeName = '/item-detail';
 
   @override
   Widget build(BuildContext context) {
     final productId = ModalRoute.of(context).settings.arguments as String;
-    final loadedFood = Provider.of<Foodproducts>(context, listen: false).findById(productId);
-   // final food = Provider.of<Foodproduct>(context,listen: false);
+    final loadedFood =
+        Provider.of<FoodProductsList>(context, listen: false).findById(productId);
+    // final food = Provider.of<Foodproduct>(context,listen: false);
     final cart = Provider.of<Cart>(context);
     final deviceSize = MediaQuery.of(context).size;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
@@ -41,7 +42,7 @@ class _ItemDetailState extends State<ItemDetail> {
           ),
         ),
         body: Builder(
-                  builder: (context) => SingleChildScrollView(
+          builder: (context) => SingleChildScrollView(
             reverse: false,
             child: Padding(
               padding: EdgeInsets.only(bottom: bottom),
@@ -78,17 +79,18 @@ class _ItemDetailState extends State<ItemDetail> {
                             height: 200.0,
                             width: MediaQuery.of(context).size.width,
                             color: Colors.red,
-                            child: Image.asset(
-                              loadedFood.image,
-                              fit: BoxFit.cover,
-                            ),
+                            // child: Image.asset(
+                            //   loadedFood.image,
+                            //   fit: BoxFit.cover,
+                            // ),
                           ),
                         )
                       ],
                     ),
                     SizedBox(height: 10.0),
                     Container(
-                      padding: EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
+                      padding:
+                          EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
                       height: deviceSize.height / 9,
                       width: deviceSize.width,
                       // color: Colors.blue,
@@ -108,7 +110,7 @@ class _ItemDetailState extends State<ItemDetail> {
                                 ),
                               ),
                               Text(
-                                'By: ' "${loadedFood.chefname}",
+                                'By: ' "${loadedFood.chefname.name}",
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 14.0,
@@ -116,7 +118,7 @@ class _ItemDetailState extends State<ItemDetail> {
                                 ),
                               ),
                               Text(
-                                'From:' "${loadedFood.address}",
+                                'From:' "${loadedFood.chefname.location}",
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 14.0,
@@ -152,36 +154,37 @@ class _ItemDetailState extends State<ItemDetail> {
                       width: 350.0,
                       child: GestureDetector(
                         onTap: () {
-                               cart.addItem(loadedFood.id, loadedFood.price, loadedFood.title,
-                                  loadedFood.image);
-                              cart.getTotalPrice();
-                              Scaffold.of(context).hideCurrentSnackBar();
-                              Scaffold.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Added item to Cart'),
-                                duration: Duration(seconds: 2),
-                                action: SnackBarAction(
-                                    label: 'UNDO',
-                                    textColor: Colors.white,
-                                    onPressed: () {
-                                      cart.removeSingleItem(loadedFood.id);
-                                    }),
-                              ),
-                            );
-                            },
-                                        child: Material(
+                          cart.addItem(
+                              loadedFood.id,
+                              double.parse(loadedFood.price.toString()),
+                              loadedFood.title,
+                              loadedFood.image);
+                          cart.getTotalPrice();
+                          Scaffold.of(context).hideCurrentSnackBar();
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Added item to Cart'),
+                              duration: Duration(seconds: 2),
+                              action: SnackBarAction(
+                                  label: 'UNDO',
+                                  textColor: Colors.white,
+                                  onPressed: () {
+                                    cart.removeSingleItem(loadedFood.id);
+                                  }),
+                            ),
+                          );
+                        },
+                        child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.black87,
                           color: Colors.yellow[700],
                           elevation: 7.0,
-                            child: Center(
-                                child: Text('ADD TO CART',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ))),
-                            
-                          
+                          child: Center(
+                              child: Text('ADD TO CART',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ))),
                         ),
                       ),
                     ),
