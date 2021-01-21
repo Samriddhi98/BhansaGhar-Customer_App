@@ -9,6 +9,20 @@ class FoodProductsList with ChangeNotifier {
     return listOfProduct.firstWhere((prod) => prod.id == id);
   }
 
+  Foodproduct findByname(String title) {
+    print("list${listOfProduct.length}");
+    return listOfProduct.firstWhere((prod) => prod.title == title);
+
+    // listOfProduct.map((e) {
+    //   print('sdfgytrf');
+
+    //   if (e.title == title) {
+    //     print("object");
+    //     return e;
+    //   }
+    // });
+  }
+
   getFoodData(String cat) async {
     print(cat);
     this.listOfProduct = await ApiService().getFoodDataFromApi(cat);
@@ -63,7 +77,7 @@ class Foodproduct with ChangeNotifier {
         description: json["description"],
         chefname: cm,
         address: "",
-        image:  json["photo"],
+        image: json["photo"],
         category: json["category"],
         price: json["price"],
         isFavourite: false,

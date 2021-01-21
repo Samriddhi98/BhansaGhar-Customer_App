@@ -2,6 +2,7 @@ import 'package:BhansaGhar/models/category_model.dart';
 import 'package:BhansaGhar/providers/category_data.dart';
 import 'package:BhansaGhar/providers/foodproduct.dart';
 import 'package:BhansaGhar/screens/navdrawer.dart';
+import 'package:BhansaGhar/screens/searchpage.dart';
 import 'package:BhansaGhar/widgets/category_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -88,7 +89,12 @@ class _MenuPageState extends State<MenuPage>
         drawer: NavDrawer(),
         body: Column(
           children: <Widget>[
-            SearchBar(),
+            InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SearchPage()));
+                },
+                child: SearchBar()),
             TabBar(
               isScrollable: true,
               tabs: catlist,
@@ -128,7 +134,6 @@ class _MenuPageState extends State<MenuPage>
                     child: Column(
                       children: [
                         Expanded(
-                          
                           child:
                               TabBarView(controller: tabController, children: [
                             Container(

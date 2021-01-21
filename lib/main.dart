@@ -4,7 +4,9 @@ import 'package:BhansaGhar/providers/foodproduct.dart';
 import 'package:BhansaGhar/screens/checkout.dart';
 import 'package:BhansaGhar/screens/favourites_page.dart';
 import 'package:BhansaGhar/screens/itemdetail.dart';
+import 'package:BhansaGhar/screens/locatorpage.dart';
 import 'package:BhansaGhar/screens/order_page.dart';
+import 'package:BhansaGhar/screens/searchpage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:BhansaGhar/providers/foodproducts.dart';
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.redAccent,
             //fontFamily: 'Lato',
           ),
-          home: AuthScreen(),
+          home:AuthScreen(),
           routes: <String, WidgetBuilder>{
             '/sign-up': (BuildContext context) => new SignUp(),
             '/login': (BuildContext context) => new AuthScreen(),
@@ -56,6 +58,8 @@ class MyApp extends StatelessWidget {
             '/orderpage': (BuildContext context) => new OrderPage(),
             '/favourites': (BuildContext context) => new Myfavorites(),
             '/checkout': (BuildContext context) => new CheckoutPage(),
+            '/locatorpage': (BuildContext context) => new LocatorPage(),
+
           }),
     );
   }
