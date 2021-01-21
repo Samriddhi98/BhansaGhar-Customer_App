@@ -23,7 +23,7 @@ class ApiService {
       if (response.statusCode == 200) {
         responseData = response.data["data"];
         print(responseData.runtimeType);
-
+       
         foodproductData =
             responseData.map((e) => Foodproduct.fromJson(e)).toList();
         print("Data vetyo");
