@@ -15,6 +15,8 @@ class _LocatorPageState extends State<LocatorPage> {
   var location = "";
   var lat;
   var long;
+
+  
   void getCurrentLocation() async {
     var position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -153,7 +155,7 @@ class _LocatorPageState extends State<LocatorPage> {
                 )
               ],
             ),
-          ),
+             ),
         ),
       ),
     );

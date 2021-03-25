@@ -21,8 +21,8 @@ class _ItemDetailState extends State<ItemDetail> {
   @override
   Widget build(BuildContext context) {
     final productId = ModalRoute.of(context).settings.arguments as String;
-    final loadedFood =
-        Provider.of<FoodProductsList>(context, listen: false).findById(productId);
+    final loadedFood = Provider.of<FoodProductsList>(context, listen: false)
+        .findById(productId);
     // final food = Provider.of<Foodproduct>(context,listen: false);
     final cart = Provider.of<Cart>(context);
     final deviceSize = MediaQuery.of(context).size;
@@ -79,10 +79,10 @@ class _ItemDetailState extends State<ItemDetail> {
                             height: 200.0,
                             width: MediaQuery.of(context).size.width,
                             color: Colors.red,
-                            // child: Image.asset(
-                            //   loadedFood.image,
-                            //   fit: BoxFit.cover,
-                            // ),
+                            child: Image.asset(
+                              loadedFood.image,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         )
                       ],

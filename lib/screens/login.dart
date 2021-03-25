@@ -20,6 +20,7 @@ class _AuthScreenState extends State<AuthScreen> {
       password = TextEditingController();
   bool _togglevisibility = true;
   saveTopref(String token) async {
+  
     var preference = await SharedPreferences.getInstance();
     preference.setString("token", token);
     // String a = preference.getString("token");
