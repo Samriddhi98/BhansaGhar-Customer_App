@@ -1,3 +1,4 @@
+import 'package:BhansaGhar/Api/ApiService.dart';
 import 'package:BhansaGhar/providers/favourites.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,9 @@ import 'package:BhansaGhar/providers/foodproducts.dart';
 import 'package:BhansaGhar/providers/cart.dart';
 
 import 'package:BhansaGhar/screens/itemdetail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// import 'package:cached_network_image/cached_network_image.dart';
 
 import '../locator.dart';
 
@@ -16,6 +20,15 @@ class MenuItem extends StatefulWidget {
 }
 
 class _MenuItemState extends State<MenuItem> {
+  String token;
+
+  setTokenvalue() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    token = pref.getString("token");
+  }
+
+  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Foodproduct>(context, listen: false);
@@ -33,6 +46,7 @@ class _MenuItemState extends State<MenuItem> {
               .pushNamed('/item-detail', arguments: product.id);
         },
         child: Container(
+          key: _formkey,
           margin: EdgeInsets.only(top: 5.0, bottom: 10.0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
@@ -42,13 +56,20 @@ class _MenuItemState extends State<MenuItem> {
                   height: 200.0,
                   width: 380.0,
                   // color: Colors.red,
-                  child: Image.network(
-                    //
-                    // "https://bhansagharapi.herokuapp.com/uploads/1610691856671-images%20(2).jpg",
+                  // child: CachedNetworkImage(
+                  //   placeholder: (context, url) => Container(
+                  //     child: Center(
+                  //       child: CircularProgressIndicator(),
+                  //     ),
+                  //   ),
+                  //   imageUrl:
+                  //       'https://bhansagharapi.herokuapp.com/uploads/${product.image}',
+                  // ),
+                  //Image.network(
 
-                    "https://bhansagharapi.herokuapp.com/uploads/${product.image}",
-                    fit: BoxFit.cover,
-                  ),
+                  //   "https://bhansagharapi.herokuapp.com/uploads/${product.image}",
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
                 Positioned(
                   left: 20.0,

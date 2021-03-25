@@ -18,12 +18,13 @@ class ApiService {
 
     try {
       print("$category in service");
-      Response response = await dio.get(url);
+      Response response;
+      response = await dio.get(url);
+      responseData = response.data["data"];
+
+
 
       if (response.statusCode == 200) {
-        responseData = response.data["data"];
-        print(responseData.runtimeType);
-
         foodproductData =
             responseData.map((e) => Foodproduct.fromJson(e)).toList();
         print("Data vetyo");
@@ -130,6 +131,68 @@ class ApiService {
       print(err.response);
       return err.response;
      // return Response(statusCode: 200, data: {'token': 'token'});
+    }
+
+    return response;
+  }
+
+  Future<Response> postAdd(String add) async {
+    String endPoint = "/api/v1/favourites/$add";
+    String url = baseUrl + endPoint;
+
+    Response response;
+    try {
+      response = await dio.post(
+        url,
+        options: Options(headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: "Bearer $add"
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // registermodelData =
+        //     responseData.map((e) => RegisterModel.fromJson(e)).toList();
+        print(response.data);
+        return response;
+      }
+    } catch (e) {
+      print("Error ${e}");
+      DioError err;
+      err = e;
+      print(err.response);
+      return Response(statusCode: 200, data: {'token': 'token'});
+    }
+
+    return response;
+  }
+
+  Future<Response> getDetail(String token) async {
+    String endPoint = "/api/v1/users/me";
+    String url = baseUrl + endPoint;
+
+    Response response;
+    try {
+      response = await dio.post(
+        url,
+        options: Options(headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: "Bearer $token"
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // registermodelData =
+        //     responseData.map((e) => RegisterModel.fromJson(e)).toList();
+        print(response.data);
+        return response;
+      }
+    } catch (e) {
+      print("Error ${e}");
+      DioError err;
+      err = e;
+      print(err.response);
+      return Response(statusCode: 200, data: {'token': 'token'});
     }
 
     return response;

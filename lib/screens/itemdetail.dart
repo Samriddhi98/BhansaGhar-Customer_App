@@ -78,10 +78,10 @@ class _ItemDetailState extends State<ItemDetail> {
                             height: 200.0,
                             width: MediaQuery.of(context).size.width,
                             color: Colors.red,
-                            // child: Image.asset(
-                            //   loadedFood.image,
-                            //   fit: BoxFit.cover,
-                            // ),
+                            child: Image.asset(
+                              loadedFood.image,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         )
                       ],

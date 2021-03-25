@@ -22,6 +22,7 @@ class _AuthScreenState extends State<AuthScreen> {
   bool _togglevisibility = true;
 
   saveTopref(String token) async {
+  
     var preference = await SharedPreferences.getInstance();
     preference.setString("token", token);
     // String a = preference.getString("token");
