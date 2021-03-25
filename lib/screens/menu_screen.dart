@@ -31,7 +31,7 @@ class _MenuPageState extends State<MenuPage>
   List<Foodproduct> lunch = [];
   List<Foodproduct> dinner = [];
 
-  final GlobalKey _scaffoldKey = new GlobalKey();
+  // final GlobalKey _scaffoldKey = new GlobalKey();
   @override
   void initState() {
     // TODO: implement initState
@@ -83,8 +83,8 @@ class _MenuPageState extends State<MenuPage>
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
-        key: _scaffoldKey,
-        resizeToAvoidBottomPadding: false,
+        // key: _scaffoldKey,
+        resizeToAvoidBottomInset: false,
         drawer: NavDrawer(),
         body: Column(
           children: <Widget>[
@@ -124,11 +124,10 @@ class _MenuPageState extends State<MenuPage>
                   }
 
                   return Container(
-                    height: MediaQuery.of(context).size.height * 0.7,
+                    height: deviceSize.height * 0.5,
                     child: Column(
                       children: [
                         Expanded(
-                          
                           child:
                               TabBarView(controller: tabController, children: [
                             Container(
@@ -280,3 +279,14 @@ class _MenuPageState extends State<MenuPage>
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+
+// class MenuPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(child: Text('MenuPage'),),
+//     );
+//   }
+// }

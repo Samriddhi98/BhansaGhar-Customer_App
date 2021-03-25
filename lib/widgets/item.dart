@@ -68,6 +68,7 @@ class _MenuItemState extends State<MenuItem> {
                               ? Icons.favorite
                               : Icons.favorite_border),
                           onPressed: () {
+                            // addToFavorite(product.id);
                             product.toggleFavouriteStatus();
                           }),
                     ),
@@ -146,7 +147,7 @@ class _MenuItemState extends State<MenuItem> {
                       Column(
                         children: <Widget>[
                           Text(
-                            product.price.toString(),
+                            'Rs.${product.price.toString()}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.yellowAccent,

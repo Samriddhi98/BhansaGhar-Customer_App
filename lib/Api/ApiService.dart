@@ -72,13 +72,14 @@ class ApiService {
     return response;
   }
 
-  Future<Response> postUsers(LoginModel login) async {
+  Future<Response> postLoginUser(LoginModel login) async {
     String endPoint = "/api/v1/users/login";
     String url = baseUrl + endPoint;
     List<dynamic> responseData;
     List<LoginModel> loginmodelData;
     Response response;
     try {
+      dio.options.headers['Content-Type'] = 'application/json';
       response = await dio.post(url,
           options: Options(
               headers: {HttpHeaders.contentTypeHeader: 'application/json'}),
@@ -95,7 +96,8 @@ class ApiService {
       DioError err;
       err = e;
       print(err.response);
-      return Response(statusCode: 200, data: {'token': 'token'});
+      return response;
+      // return Response(statusCode: 200, data: {'token': 'token'});
     }
 
     return response;
@@ -126,7 +128,8 @@ class ApiService {
       DioError err;
       err = e;
       print(err.response);
-      return Response(statusCode: 200, data: {'token': 'token'});
+      return err.response;
+     // return Response(statusCode: 200, data: {'token': 'token'});
     }
 
     return response;

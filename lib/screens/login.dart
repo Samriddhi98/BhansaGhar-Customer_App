@@ -1,12 +1,12 @@
 import 'package:BhansaGhar/Api/ApiService.dart';
 import 'package:BhansaGhar/models/loginmodel.dart';
-import 'package:BhansaGhar/models/registermodel.dart';
+
 import 'package:BhansaGhar/screens/main_screen.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'menu_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -18,7 +18,9 @@ class _AuthScreenState extends State<AuthScreen> {
   final scaffoldkey = GlobalKey<ScaffoldState>();
   TextEditingController email = TextEditingController(),
       password = TextEditingController();
+
   bool _togglevisibility = true;
+
   saveTopref(String token) async {
     var preference = await SharedPreferences.getInstance();
     preference.setString("token", token);
@@ -31,7 +33,7 @@ class _AuthScreenState extends State<AuthScreen> {
     final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       key: scaffoldkey,
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: <Widget>[
           Column(children: <Widget>[
@@ -66,21 +68,23 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: TextFormField(
                         validator: (value) {
                           if (value.isNotEmpty) {
-                            // print(value);
-                            // bool valid = EmailValidator.validate(value);
-                            // print(valid);
-                            // if (!valid) {
-                            //   return "Email is invalid";
-                            // }
+                            print(value);
+                            bool valid = EmailValidator.validate(value);
+                            print(valid);
+                            if (!valid) {
+                              return "         Email is invalid";
+                            }
                           } else {
-                            return "Email cannot be empty";
+                            return "           Email cannot be empty";
                           }
+                          // return value;
                         },
                         decoration: InputDecoration(
-                          hintText: "Username or email",
+                          hintText: "Email",
                           prefixIcon: Icon(Icons.mail_outline),
                           border: InputBorder.none,
                         ),
+                        controller: email,
                       )),
                   SizedBox(height: 15.0),
                   Card(
@@ -91,8 +95,9 @@ class _AuthScreenState extends State<AuthScreen> {
                     child: TextFormField(
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "Password required";
+                          return "              Password required";
                         }
+                        //  return value;
                       },
                       decoration: InputDecoration(
                         hintText: "Password",
@@ -110,6 +115,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                       ),
                       obscureText: _togglevisibility,
+                      controller: password,
                     ),
                   )
                 ],
@@ -125,6 +131,7 @@ class _AuthScreenState extends State<AuthScreen> {
             alignment: Alignment(1.0, 0.0),
             // color: Colors.blue,
             child: InkWell(
+              onTap: () {},
               child: Text(
                 'Forgot Password',
                 style: TextStyle(
@@ -152,25 +159,62 @@ class _AuthScreenState extends State<AuthScreen> {
                         ))),
               ),
               onTap: () {
+                print(email.text);
                 if (formKey.currentState.validate()) {
                   LoginModel loginModel =
                       LoginModel(email: email.text, password: password.text);
-                  ApiService().postUsers(loginModel).then((value) {
+                  ApiService().postLoginUser(loginModel).then((value) {
                     if (value.statusCode == 200) {
                       saveTopref(value.data['token']);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => MainScreen()));
+                      Fluttertoast.showToast(
+                        msg: value.data['Login Success!'],
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 10.0,
+                      );
+                      Navigator.of(context).pushNamed('/main-screen');
                     } else if (value.statusCode == 400) {
                       print("gftyrugr");
                       print(value.data['error']);
-                      scaffoldkey.currentState.showSnackBar(SnackBar(
-                        content: Text(value.data['error']),
-                        backgroundColor: Colors.red,
-                      ));
+                      Fluttertoast.showToast(
+                        msg: value.data['Login Failed!'],
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 10.0,
+                      );
+                      // scaffoldkey.currentState.showSnackBar(SnackBar(
+                      //   content: Text(value.data['error']),
+                      //   backgroundColor: Colors.red,
+                      // ));
+                    } else {
+                      Fluttertoast.showToast(
+                        msg: value.data['Login Failed!'],
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 10.0,
+                      );
                     }
                   });
                 } else {
                   print("not validated");
+                  Fluttertoast.showToast(
+                    msg: 'Login Failed!',
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.grey,
+                    textColor: Colors.white,
+                    fontSize: 10.0,
+                  );
                 }
               },
             ),

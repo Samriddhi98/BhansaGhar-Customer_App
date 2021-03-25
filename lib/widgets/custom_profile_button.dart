@@ -4,7 +4,7 @@ class ProfileIconButton extends StatelessWidget {
   final IconData icon;
   final String text;
 
-  ProfileIconButton({this.icon,this.text});
+  ProfileIconButton({this.icon, this.text});
 
   @override
   Widget build(BuildContext context) {

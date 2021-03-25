@@ -2,6 +2,7 @@ import 'package:BhansaGhar/Api/ApiService.dart';
 import 'package:BhansaGhar/models/registermodel.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -12,16 +13,18 @@ class _SignUpState extends State<SignUp> {
   bool _togglevisibility = true;
   RegisterModel registerModel;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
   TextEditingController username = TextEditingController(),
       email = TextEditingController(),
       password = TextEditingController(),
       reEnterpassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: <Widget>[
           Column(children: <Widget>[
@@ -71,7 +74,7 @@ class _SignUpState extends State<SignUp> {
                           //bool valid = EmailValidator.validate(value);
                           //print(valid);
                           //if (!valid) {
-                            //return "Email is invalid";
+                          //return "Email is invalid";
                           //}
                         },
                         controller: email,
@@ -135,37 +138,56 @@ class _SignUpState extends State<SignUp> {
           Container(
             height: 40.0,
             width: 350.0,
-            child: Material(
-              borderRadius: BorderRadius.circular(20.0),
-              shadowColor: Colors.black87,
-              color: Colors.black,
-              elevation: 7.0,
-              child: GestureDetector(
+            child: GestureDetector(
+              child: Material(
+                borderRadius: BorderRadius.circular(20.0),
+                shadowColor: Colors.black87,
+                color: Colors.black,
+                elevation: 7.0,
                 child: Center(
                     child: Text('SIGNUP',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ))),
-                onTap: () {
-                  if (_formkey.currentState.validate()) {
-                    registerModel = RegisterModel(
-                        username: username.text,
-                        email: email.text,
-                        password: password.text);
-                    ApiService().postUser(registerModel).then((value) {
-                      if (value.statusCode == 200) {
-                         Navigator.pop(context);
-                      } else if (value.statusCode == 400) {
-                        print("eereafsdfasdfadsf");
-                        print(value.data['error']);
-                      }
-                    });
-                  } else {
-                    print("not validated");
-                  }
-                },
               ),
+              onTap: () {
+                if (_formkey.currentState.validate()) {
+                  registerModel = RegisterModel(
+                      username: username.text,
+                      email: email.text,
+                      password: password.text);
+                  ApiService().postUser(registerModel).then((value) {
+                    if (value.statusCode == 200) {
+                      Navigator.pop(context);
+                      Fluttertoast.showToast(
+                        msg: 'SignUp complete',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 10.0,
+                      );
+                      Navigator.of(context).pushNamed('/main-screen');
+                    } else if (value.statusCode == 400) {
+                      print("eereafsdfasdfadsf");
+                      print(value.data['error']);
+                      Fluttertoast.showToast(
+                        msg: 'SignUp failed',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 14.0,
+                      );
+                    }
+                  });
+                } else {
+                  print("not validated");
+                }
+              },
             ),
           ),
           SizedBox(height: 20.0),

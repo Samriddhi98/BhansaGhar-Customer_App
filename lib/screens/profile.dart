@@ -1,7 +1,9 @@
+import 'package:BhansaGhar/screens/login.dart';
 import 'package:BhansaGhar/widgets/custom_list_tile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:BhansaGhar/screens/editprofile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -153,7 +155,14 @@ class _ProfilePageState extends State<ProfilePage> {
             // color:Colors.yellow,
             alignment: Alignment.bottomRight,
             child: FlatButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                    SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          //Return String
+                          Future<bool> token = prefs.setString("token", null);
+                          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (BuildContext context) => AuthScreen()));
+                },
                 icon: Icon(Icons.exit_to_app),
                 label: Text('Log Out')),
           ),

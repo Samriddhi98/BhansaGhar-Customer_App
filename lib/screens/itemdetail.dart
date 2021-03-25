@@ -21,14 +21,13 @@ class _ItemDetailState extends State<ItemDetail> {
   @override
   Widget build(BuildContext context) {
     final productId = ModalRoute.of(context).settings.arguments as String;
-    final loadedFood =
-        Provider.of<FoodProductsList>(context, listen: false).findById(productId);
+    final loadedFood = Provider.of<FoodProductsList>(context, listen: false)
+        .findById(productId);
     // final food = Provider.of<Foodproduct>(context,listen: false);
     final cart = Provider.of<Cart>(context);
     final deviceSize = MediaQuery.of(context).size;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           centerTitle: true,

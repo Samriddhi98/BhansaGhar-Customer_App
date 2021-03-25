@@ -8,7 +8,6 @@ class EditProfile extends StatelessWidget {
     final deviceSize = MediaQuery.of(context).size;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: false,
       body: Container(
         height: deviceSize.height,
@@ -70,13 +69,12 @@ class EditProfile extends StatelessWidget {
                                   children: <Widget>[
                                     ProfileIconButton(
                                         icon: Icons.file_upload,
-                                        text: 'New Image'
-                                        ),
+                                        text: 'New Image'),
                                     SizedBox(height: 10.0),
-                                     ProfileIconButton(
-                                        icon: Icons.delete,
-                                        text: 'Delete',
-                                        ),
+                                    ProfileIconButton(
+                                      icon: Icons.delete,
+                                      text: 'Delete',
+                                    ),
                                   ]),
                             ]),
                         SizedBox(height: 15.0),
@@ -111,25 +109,24 @@ class EditProfile extends StatelessWidget {
                 ),
               ),
             ),
-        
-              Container(
-                height: 70.0,
-               // color: Colors.yellow,
-                child:GestureDetector(
-                  onTap: (){},
-                                  child: Card(
-                     elevation: 5.0,
-                    child: Padding(
-                      padding: EdgeInsets.all(15.0),
-                      child: CustomListTile(
-                            icon: Icons.delete_forever,
-                            text: 'Remove Account',
-                          ),
+            Container(
+              height: 70.0,
+              // color: Colors.yellow,
+              child: GestureDetector(
+                onTap: () {},
+                child: Card(
+                  elevation: 5.0,
+                  child: Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: CustomListTile(
+                      icon: Icons.delete_forever,
+                      text: 'Remove Account',
                     ),
                   ),
                 ),
               ),
-            
+            ),
+
             /*  
             ), */
           ],
