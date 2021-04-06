@@ -82,10 +82,10 @@ class _MenuPageState extends State<MenuPage>
     final deviceSize = MediaQuery.of(context).size;
 
     return WillPopScope(
-      onWillPop: _onBackPressed,
+      //onWillPop: _onBackPressed,
       child: Scaffold(
         key: _scaffoldKey,
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         drawer: NavDrawer(),
         body: Column(
           children: <Widget>[

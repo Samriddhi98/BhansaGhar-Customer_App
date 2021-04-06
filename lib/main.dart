@@ -50,9 +50,9 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.redAccent,
             //fontFamily: 'Lato',
           ),
-          home:  SplashScreen(),
+          home: SplashScreen(),
           // GoogleMapScreen(),
-         
+
           routes: <String, WidgetBuilder>{
             '/sign-up': (BuildContext context) => new SignUp(),
             '/login': (BuildContext context) => new AuthScreen(),
@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
             '/main-screen': (BuildContext context) => new MainScreen(),
             '/item-detail': (BuildContext context) => new ItemDetail(),
             '/orderpage': (BuildContext context) => new OrderPage(),
-            '/favourites': (BuildContext context) => new Myfavorites(),
+            '/favourites': (BuildContext context) => new MyFavorites(),
             '/checkout': (BuildContext context) => new CheckoutPage(),
             '/locatorpage': (BuildContext context) => new LocatorPage(),
           }),

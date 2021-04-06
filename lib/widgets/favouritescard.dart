@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 class FavouritesCard extends StatelessWidget {
-   final String id;
+  final String id;
   final double price;
   final String title;
   final String chefname;
   final String image;
 
-  FavouritesCard(this.id,this.price, this.title, this.chefname,
-      this.image);
+  FavouritesCard({this.id, this.price, this.title, this.chefname, this.image});
   @override
   Widget build(BuildContext context) {
     return Dismissible(
@@ -53,21 +52,20 @@ class FavouritesCard extends StatelessWidget {
                 ));
       },
       onDismissed: (direction) {
-     //   Provider.of<Cart>(context, listen: false).removeItems(productId);
+        //   Provider.of<Cart>(context, listen: false).removeItems(productId);
       },
-          child: Card(
+      child: Card(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[             
+            children: <Widget>[
               Container(
                 height: 75.0,
                 width: 75.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(image),
-                      fit: BoxFit.cover),
+                      image: AssetImage(image), fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(37.0),
                   boxShadow: [
                     BoxShadow(
@@ -84,27 +82,28 @@ class FavouritesCard extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     title,
-                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 5.0),
                   Text(
-                   'Rs.' '${price.toString()}',
+                    'Rs.' '${price.toString()}',
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
                   ),
-                  SizedBox(height:5.0),
-                 // Text('Total: Rs.''${(price * counterModel.getCounter()).toString()}'),
-                // Text('Total: RS.''${cart.perItemTotalAmount(counterModel.getCounter())}')
+                  SizedBox(height: 5.0),
+                  // Text('Total: Rs.''${(price * counterModel.getCounter()).toString()}'),
+                  // Text('Total: RS.''${cart.perItemTotalAmount(counterModel.getCounter())}')
                 ],
               ),
               Spacer(),
               InkWell(
-                            child: Icon(
+                child: Icon(
                   Icons.cancel,
                   color: Colors.grey,
                 ),
-                onTap: (){},
+                onTap: () {},
               )
             ],
           ),

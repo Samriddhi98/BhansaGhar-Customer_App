@@ -1,7 +1,10 @@
 import 'package:BhansaGhar/Api/ApiService.dart';
 import 'package:BhansaGhar/models/registermodel.dart';
+import 'package:BhansaGhar/screens/login.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -11,17 +14,36 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   bool _togglevisibility = true;
   RegisterModel registerModel;
+
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
   TextEditingController username = TextEditingController(),
       email = TextEditingController(),
       password = TextEditingController(),
       reEnterpassword = TextEditingController();
+
+  saveTopref(String token) async {
+    print('hello');
+    print('token:' + token);
+    var preference = await SharedPreferences.getInstance();
+    preference.setString("token", token);
+    String a = preference.getString("token");
+    print('sharedpreference token $a');
+  }
+
+  saveIdTopref({String id}) async {
+    var preference = await SharedPreferences.getInstance();
+    preference.setString("UserId", id);
+    String a = preference.getString("UserId");
+    print('UserId $a');
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: <Widget>[
           Column(children: <Widget>[
@@ -71,7 +93,7 @@ class _SignUpState extends State<SignUp> {
                           //bool valid = EmailValidator.validate(value);
                           //print(valid);
                           //if (!valid) {
-                            //return "Email is invalid";
+                          //return "Email is invalid";
                           //}
                         },
                         controller: email,
@@ -153,12 +175,41 @@ class _SignUpState extends State<SignUp> {
                         username: username.text,
                         email: email.text,
                         password: password.text);
+                    print(username.text);
+                    print(email.text);
+
+                    print(password.text);
+
                     ApiService().postUser(registerModel).then((value) {
                       if (value.statusCode == 200) {
-                         Navigator.pop(context);
+                        saveTopref(value.data['token']);
+                        ApiService().getUserDetails().then((value) {
+                          print('user ko id :${value.id}');
+                          saveIdTopref(id: value.id);
+                        });
+                        Navigator.pop(context);
+                        Fluttertoast.showToast(
+                          msg: 'SignUp complete',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.grey,
+                          textColor: Colors.white,
+                          fontSize: 10.0,
+                        );
+                        Navigator.of(context).pushNamed('/main-screen');
                       } else if (value.statusCode == 400) {
                         print("eereafsdfasdfadsf");
                         print(value.data['error']);
+                        Fluttertoast.showToast(
+                          msg: 'SignUp failed',
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.grey,
+                          textColor: Colors.white,
+                          fontSize: 14.0,
+                        );
                       }
                     });
                   } else {

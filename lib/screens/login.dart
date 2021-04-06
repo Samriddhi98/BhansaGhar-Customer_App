@@ -4,6 +4,7 @@ import 'package:BhansaGhar/models/registermodel.dart';
 import 'package:BhansaGhar/screens/main_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'menu_screen.dart';
@@ -14,17 +15,28 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final scaffoldkey = GlobalKey<ScaffoldState>();
-  TextEditingController email = TextEditingController(),
-      password = TextEditingController();
+
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+
   bool _togglevisibility = true;
+
   saveTopref(String token) async {
-  
+    print('hello');
+    print('token:' + token);
     var preference = await SharedPreferences.getInstance();
     preference.setString("token", token);
-    // String a = preference.getString("token");
-    // print(a);
+    String a = preference.getString("token");
+    print('sharedpreference token $a');
+  }
+
+  saveIdTopref({String id}) async {
+    var preference = await SharedPreferences.getInstance();
+    preference.setString("UserId", id);
+    String a = preference.getString("UserId");
+    print('UserId $a');
   }
 
   @override
@@ -32,7 +44,7 @@ class _AuthScreenState extends State<AuthScreen> {
     final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       key: scaffoldkey,
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: <Widget>[
           Column(children: <Widget>[
@@ -56,7 +68,7 @@ class _AuthScreenState extends State<AuthScreen> {
             width: deviceSize.width,
             color: Colors.white,
             child: Form(
-              key: formKey,
+              key: _formKey,
               child: Column(
                 children: <Widget>[
                   Card(
@@ -65,6 +77,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: TextFormField(
+                        controller: email,
                         validator: (value) {
                           if (value.isNotEmpty) {
                             // print(value);
@@ -90,6 +103,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: TextFormField(
+                      controller: password,
                       validator: (value) {
                         if (value.isEmpty) {
                           return "Password required";
@@ -136,10 +150,10 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
           SizedBox(height: 30.0),
-          Container(
-            height: 40.0,
-            width: 350.0,
-            child: GestureDetector(
+          InkWell(
+            child: Container(
+              height: 40.0,
+              width: 350.0,
               child: Material(
                 borderRadius: BorderRadius.circular(20.0),
                 shadowColor: Colors.black87,
@@ -152,30 +166,95 @@ class _AuthScreenState extends State<AuthScreen> {
                           fontWeight: FontWeight.bold,
                         ))),
               ),
-              onTap: () {
-                if (formKey.currentState.validate()) {
-                  LoginModel loginModel =
-                      LoginModel(email: email.text, password: password.text);
-                  ApiService().postUsers(loginModel).then((value) {
-                    if (value.statusCode == 200) {
-                      saveTopref(value.data['token']);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => MainScreen()));
-                    } else if (value.statusCode == 400) {
-                      print("gftyrugr");
-                      print(value.data['error']);
-                      scaffoldkey.currentState.showSnackBar(SnackBar(
-                        content: Text(value.data['error']),
-                        backgroundColor: Colors.red,
-                      ));
-                    }
-                  });
-                } else {
-                  print("not validated");
-                }
-              },
             ),
+            onTap: () {
+              print('log in email: ${email.text}');
+              print(password.text);
+
+              if (_formKey.currentState.validate()) {
+                LoginModel loginModel = LoginModel(
+                  email: email.text,
+                  password: password.text,
+                );
+                ApiService().postUserLogin(loginModel).then((value) {
+                  if (value.statusCode == 200) {
+                    saveTopref(value.data['token']);
+                    ApiService().getUserDetails().then((value) {
+                      print('user ko id :${value.id}');
+                      saveIdTopref(id: value.id);
+                    });
+
+                    Navigator.pop(context);
+                    Navigator.of(context).pushNamed('/main-screen');
+                  } else if (value.statusCode == 400) {
+                    print("eereafsdfasdfadsf");
+                    print(value.data['error']);
+                    Fluttertoast.showToast(
+                      msg: value.data['error'],
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.grey,
+                      textColor: Colors.white,
+                      fontSize: 10.0,
+                    );
+                  }
+                });
+              } else {
+                print("not validated");
+                Fluttertoast.showToast(
+                  msg: 'not validated',
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.grey,
+                  textColor: Colors.white,
+                  fontSize: 10.0,
+                );
+              }
+            },
           ),
+          // Container(
+          //   height: 40.0,
+          //   width: 350.0,
+          //   child: GestureDetector(
+          //     child: Material(
+          //       borderRadius: BorderRadius.circular(20.0),
+          //       shadowColor: Colors.black87,
+          //       color: Colors.black,
+          //       elevation: 7.0,
+          //       child: Center(
+          //           child: Text('LOGIN',
+          //               style: TextStyle(
+          //                 color: Colors.white,
+          //                 fontWeight: FontWeight.bold,
+          //               ))),
+          //     ),
+          //     onTap: () {
+          //       if (formKey.currentState.validate()) {
+          //         LoginModel loginModel =
+          //             LoginModel(email: email.text, password: password.text);
+          //         ApiService().postUserLogin(loginModel).then((value) {
+          //           if (value.statusCode == 200) {
+          //             print('akfbh: ${value.data['token']}');
+          //             saveTopref(value.data['token']);
+          //             Navigator.of(context).push(MaterialPageRoute(
+          //                 builder: (BuildContext context) => MainScreen()));
+          //           } else if (value.statusCode == 400) {
+          //             print("gftyrugr");
+          //             print(value.data['error']);
+          //             scaffoldkey.currentState.showSnackBar(SnackBar(
+          //               content: Text(value.data['error']),
+          //               backgroundColor: Colors.red,
+          //             ));
+          //           }
+          //         });
+          //       } else {
+          //         print("not validated");
+          //       }
+          //     },
+          //   ),
+          // ),
           SizedBox(height: 20.0),
           Container(
             height: 40.0,

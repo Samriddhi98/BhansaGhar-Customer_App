@@ -20,7 +20,12 @@ class _ItemDetailState extends State<ItemDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final productId = ModalRoute.of(context).settings.arguments as String;
+    final product = ModalRoute.of(context).settings.arguments as Map;
+    print(product);
+    final productId = product['id'];
+    bool productfav = product['isfav'];
+    print(productfav);
+    // final isFav = product['isfav'];
     final loadedFood = Provider.of<FoodProductsList>(context, listen: false)
         .findById(productId);
     // final food = Provider.of<Foodproduct>(context,listen: false);
@@ -28,7 +33,7 @@ class _ItemDetailState extends State<ItemDetail> {
     final deviceSize = MediaQuery.of(context).size;
     final bottom = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
+        //  resizeToAvoidBottomPadding: false,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           centerTitle: true,
@@ -139,7 +144,9 @@ class _ItemDetailState extends State<ItemDetail> {
                                 ),
                               ),
                               Icon(
-                                Icons.favorite_border,
+                                productfav
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
                                 size: 35.0,
                                 color: Colors.yellow[700],
                               ),
