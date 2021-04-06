@@ -1,6 +1,8 @@
 import 'package:BhansaGhar/Api/ApiService.dart';
+import 'package:BhansaGhar/Api/FavouriteService.dart';
 import 'package:BhansaGhar/providers/favourites.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:provider/provider.dart';
 import 'package:BhansaGhar/providers/foodproduct.dart';
@@ -22,12 +24,6 @@ class MenuItem extends StatefulWidget {
 class _MenuItemState extends State<MenuItem> {
   String token;
 
-  setTokenvalue() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-
-    token = pref.getString("token");
-  }
-
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -42,8 +38,8 @@ class _MenuItemState extends State<MenuItem> {
       ],
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context)
-              .pushNamed('/item-detail', arguments: product.id);
+          Navigator.of(context).pushNamed('/item-detail',
+              arguments: {"id": product.id, "isfav": product.isFavourite});
         },
         child: Container(
           key: _formkey,
@@ -63,7 +59,8 @@ class _MenuItemState extends State<MenuItem> {
                       ),
                     ),
                     imageUrl:
-                        'https://bhansagharapi.herokuapp.com/uploads/${product.image}',
+                        //  'https://bhansagharapi.herokuapp.com/uploads/${product.image}',
+                        'http://10.0.2.2:5000/uploads//${product.image}',
                   ),
                   //Image.network(
 
@@ -89,18 +86,50 @@ class _MenuItemState extends State<MenuItem> {
                               ? Icons.favorite
                               : Icons.favorite_border),
                           onPressed: () {
-                            if (_formkey.currentState.validate()) {
-                              ApiService().postAdd(token).then((value) {
-                                if (value.statusCode == 200) {
+                            // if (_formkey.currentState.validate()) {
+                            if (!product.isFavourite) {
+                              FavService()
+                                  .addToFavourite(product.id)
+                                  .then((value) {
+                                if (value.statusCode == 201) {
+                                  print('status ok in item page');
                                   product.toggleFavouriteStatus();
+                                  setState(() {});
+                                  Fluttertoast.showToast(
+                                    msg: 'Added to Favourite',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.grey,
+                                    textColor: Colors.white,
+                                    fontSize: 10.0,
+                                  );
                                 } else if (value.statusCode == 400) {
                                   print("eereafsdfasdfadsf");
                                   print(value.data['error']);
                                 }
                               });
                             } else {
-                              print("not validated");
+                              FavService()
+                                  .removeFromFavourite(product.id)
+                                  .then((value) {
+                                if (value.statusCode == 201) {
+                                  print('status ok in item page');
+                                  product.toggleFavouriteStatus();
+                                  setState(() {});
+                                } else if (value.statusCode == 400) {
+                                  print("eereafsdfasdfadsf");
+                                  print(value.data['error']);
+                                }
+                              });
                             }
+
+                            // setState(() {
+                            //   product.isFavourite = !product.isFavourite;
+                            // });
+                            // } else {
+                            //   print("not validated");
+                            // }
                           }),
                     ),
                   ),
@@ -178,7 +207,7 @@ class _MenuItemState extends State<MenuItem> {
                       Column(
                         children: <Widget>[
                           Text(
-                            product.price.toString(),
+                            'Rs. ${product.price.toString()}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.yellowAccent,

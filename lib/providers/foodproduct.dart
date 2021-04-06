@@ -35,7 +35,7 @@ class Foodproduct with ChangeNotifier {
   final String title;
   final String description;
   final ChefModel chefname;
-  final String address;
+  // final String address;
   final String image;
   final String category;
   final List<dynamic> type;
@@ -48,7 +48,7 @@ class Foodproduct with ChangeNotifier {
       @required this.title,
       @required this.description,
       @required this.chefname,
-      @required this.address,
+      // @required this.address,
       @required this.image,
       @required this.category,
       @required this.type,
@@ -64,11 +64,11 @@ class Foodproduct with ChangeNotifier {
   factory Foodproduct.fromJson(Map<String, dynamic> json) {
     ChefModel cm;
     if (json["chef"] != null) {
-      cm = ChefModel.fromJson(json["chef"]);
+      cm = ChefModel.fromJson2(json["chef"]);
     } else {
       cm = ChefModel(id: "null", name: "null", location: "null");
     }
-    ;
+    print('hello');
     print(json["name"]);
     return Foodproduct(
         id: json["_id"],
@@ -76,7 +76,7 @@ class Foodproduct with ChangeNotifier {
         type: json["type"],
         description: json["description"],
         chefname: cm,
-        address: "",
+        // address: '',
         image: json["photo"],
         category: json["category"],
         price: json["price"],
