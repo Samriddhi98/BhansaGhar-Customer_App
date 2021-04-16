@@ -1,5 +1,6 @@
 import 'package:BhansaGhar/providers/cart.dart';
 import 'package:BhansaGhar/providers/counter.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,13 +57,10 @@ class OrderCard extends StatelessWidget {
                       child: Text('Yes'),
                       onPressed: () {
                         Navigator.of(ctx).pop(true);
-
-                  
                       },
                     ),
                   ],
-                )
-                );
+                ));
       },
       onDismissed: (direction) {
         Provider.of<Cart>(context, listen: false).removeItems(productId);
@@ -101,7 +99,8 @@ class OrderCard extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        cart.decreaseTotalFromCounter(price: price,counter: counterModel.getCounter());
+                        cart.decreaseTotalFromCounter(
+                            price: price, counter: counterModel.getCounter());
                         counterModel.decrementCounter();
                       },
                       child: Icon(
@@ -119,16 +118,27 @@ class OrderCard extends StatelessWidget {
                 height: 75.0,
                 width: 75.0,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(image), fit: BoxFit.cover),
+                  // image: DecorationImage(
+                  //     image: AssetImage(image),
+                  //     fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(37.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 5.0,
-                      offset: Offset(2.0, 2.0),
-                    )
-                  ],
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.grey,
+                  //     blurRadius: 5.0,
+                  //     offset: Offset(2.0, 2.0),
+                  //   )
+                  // ],
+                ),
+                child: CachedNetworkImage(
+                  placeholder: (context, url) => Container(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                  imageUrl: 'http://192.168.2.229:5000/uploads/${image}',
+                  //'http://10.0.2.2:5000/uploads/${image}',
+                  fit: BoxFit.fill,
                 ),
               ),
               SizedBox(width: 20.0),

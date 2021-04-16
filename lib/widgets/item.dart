@@ -28,7 +28,6 @@ class _MenuItemState extends State<MenuItem> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Foodproduct>(context, listen: false);
-    final likedFood = Provider.of<Favourites>(context);
 
     return MultiProvider(
       providers: [
@@ -59,13 +58,13 @@ class _MenuItemState extends State<MenuItem> {
                       ),
                     ),
                     imageUrl:
-                        //  'https://bhansagharapi.herokuapp.com/uploads/${product.image}',
-                        'http://10.0.2.2:5000/uploads//${product.image}',
+                        'http://192.168.2.229:5000/uploads/${product.image}',
+                    //  'http://10.0.2.2:5000/uploads//${product.image}',
+                    fit: BoxFit.fill,
                   ),
                   //Image.network(
 
                   //   "https://bhansagharapi.herokuapp.com/uploads/${product.image}",
-                  //   fit: BoxFit.cover,
                   // ),
                 ),
                 Positioned(

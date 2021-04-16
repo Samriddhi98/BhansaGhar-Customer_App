@@ -23,10 +23,10 @@ class _OrderPageState extends State<OrderPage> {
     final deviceSize = MediaQuery.of(context).size;
     int total = cart.totalPrice;
     return WillPopScope(
-      onWillPop: (){
+      onWillPop: () {
         Navigator.of(context).pushNamed('/main-screen');
       },
-          child: Scaffold(
+      child: Scaffold(
         appBar: AppBar(
           title: Text(
             'Your Food Cart',
@@ -37,17 +37,17 @@ class _OrderPageState extends State<OrderPage> {
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 0.0,
-            leading: new IconButton(
-      icon: new Icon(Icons.arrow_back),
-      onPressed: () {
-        Navigator.of(context).pushNamed('/main-screen');
-      },
-  ),
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pushNamed('/main-screen');
+            },
+          ),
         ),
         body: Column(
           children: <Widget>[
             Container(
-              height: 300.0,
+              height: 400.0,
               width: deviceSize.width,
               //     color: Colors.red,
               child: ListView.builder(
@@ -83,10 +83,10 @@ class _OrderPageState extends State<OrderPage> {
                       fontSize: 20.0,
                     )),
                 trailing: // Text("Rs. ${total.toString()}",
-                Text("Rs. ${total.toString()}",
-                    style: TextStyle(
-                      fontSize: 18.0,
-                    )),
+                    Text("Rs. ${total.toString()}",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        )),
               ),
             ),
             SizedBox(height: 10.0),

@@ -2,6 +2,7 @@ import 'package:BhansaGhar/Api/FavouriteService.dart';
 import 'package:BhansaGhar/providers/foodproduct.dart';
 import 'package:BhansaGhar/widgets/favourite_card.dart';
 import 'package:BhansaGhar/widgets/favouritescard.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -62,6 +63,8 @@ class _MyFavoritesState extends State<MyFavorites> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+    final likedFood = Provider.of<Favourites>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('My Favorites List'),
@@ -95,6 +98,17 @@ class _MyFavoritesState extends State<MyFavorites> {
                             //   // "https://bhansagharapi.herokuapp.com/uploads/${favItems.image}",
                             //   fit: BoxFit.cover,
                             // ),
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) => Container(
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
+                              imageUrl:
+                                  'http://192.168.2.229:5000/uploads/${favItems.favouriteId.image}',
+                              // 'http://10.0.2.2:5000/uploads/${loadedFood.image}',
+                              fit: BoxFit.fill,
+                            ),
                           ),
                           Positioned(
                             left: 20.0,
@@ -102,29 +116,38 @@ class _MyFavoritesState extends State<MyFavorites> {
                               width: 40.0,
                               height: 45.0,
                               decoration: BoxDecoration(
-                                  color: Colors.yellow[700],
+                                  gradient: LinearGradient(
+                                      colors: [Colors.black, Colors.black38],
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topCenter),
+                                  //  color: Colors.yellow[700],
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(20.0),
                                     bottomRight: Radius.circular(20.0),
                                   )),
-                              // child: IconButton(
-                              //     icon: Icon(favItems.isFavourite
-                              //         ? Icons.favorite
-                              //         : Icons.favorite_border),
-                              //     onPressed: () {
-                              //       //       // if (_formkey.currentState.validate()) {
-                              //       //       // FavService()
-                              //       //       //     .addToFavourite(product.id)
-                              //       //       //     .then((value) {
-                              //       //       //   if (value.statusCode == 200) {
-                              //       //       //     product.toggleFavouriteStatus();
-                              //       //       //   } else if (value.statusCode == 400) {
-                              //       //       //     print("eereafsdfasdfadsf");
-                              //       //       //     print(value.data['error']);
-                              //       //       //   }
-                              //       //       // });
-                              //     }),
+                              child: IconButton(
+                                  icon: Icon(
+                                    //  likedFood.favouriteId.isFavourite
+                                    Icons.favorite,
+                                    //  : Icons.favorite_border,
+                                    color: Colors.yellow[700],
+                                  ),
+                                  onPressed: () {
+                                    FavService()
+                                        .removeFromFavourite(
+                                            favItems.favouriteId.id)
+                                        .then((value) {
+                                      if (value.statusCode == 201) {
+                                        print('status ok in item page');
+                                        //product.toggleFavouriteStatus();
+                                        setState(() {});
+                                      } else if (value.statusCode == 400) {
+                                        print("eereafsdfasdfadsf");
+                                        print(value.data['error']);
+                                      }
+                                    });
+                                  }),
                             ),
                           ),
                           Positioned(

@@ -28,13 +28,18 @@ class FoodProductsList with ChangeNotifier {
     this.listOfProduct = await ApiService().getFoodDataFromApi(cat);
     notifyListeners();
   }
+
+  void toggleFavouriteStatus(int index) {
+    listOfProduct[index].isFavourite = !listOfProduct[index].isFavourite;
+    notifyListeners();
+  }
 }
 
 class Foodproduct with ChangeNotifier {
   final String id;
   final String title;
   final String description;
-  final ChefModel chefname;
+  final ChefModel chefdetail;
   // final String address;
   final String image;
   final String category;
@@ -47,7 +52,7 @@ class Foodproduct with ChangeNotifier {
       {@required this.id,
       @required this.title,
       @required this.description,
-      @required this.chefname,
+      @required this.chefdetail,
       // @required this.address,
       @required this.image,
       @required this.category,
@@ -75,7 +80,7 @@ class Foodproduct with ChangeNotifier {
         title: json["name"],
         type: json["type"],
         description: json["description"],
-        chefname: cm,
+        chefdetail: cm,
         // address: '',
         image: json["photo"],
         category: json["category"],

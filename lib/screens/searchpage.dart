@@ -57,7 +57,7 @@ class _SearchPageState extends State<SearchPage> {
                                     listen: false)
                                 .findByname(title.text);
                             if (a != null) {
-                              print(a.chefname);
+                              print(a.chefdetail);
                               setState(() {
                                 list.add(a);
                               });
@@ -75,11 +75,11 @@ class _SearchPageState extends State<SearchPage> {
                       itemBuilder: (context, index) {
                         if (list[index].price != null) {
                           return ChangeNotifierProvider.value(
-                                        value: list[0],
-                                        child: Container(
-                                            child: Column(
-                                          children: [MenuItem()],
-                                        )));
+                              value: list[0],
+                              child: Container(
+                                  child: Column(
+                                children: [MenuItem()],
+                              )));
                         } else {
                           return Text("No Found");
                         }

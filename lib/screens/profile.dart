@@ -12,6 +12,20 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String username;
+  String email;
+  String password;
+
+  setUserDetailValuesSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    username = prefs.getString("Username");
+    email = prefs.getString("UserEmail");
+    password = prefs.getString("username");
+    setState(() {});
+    // print('add food token$token');
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -60,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Sammy Tammy',
+                            username != null ? username : 'Sammy Tammy',
                             style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
@@ -68,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           SizedBox(height: 10.0),
                           Text(
-                            '123456789',
+                            email != null ? email : 'example@gmail.com',
                             style: TextStyle(color: Colors.grey),
                           ),
                           SizedBox(height: 20.0),
