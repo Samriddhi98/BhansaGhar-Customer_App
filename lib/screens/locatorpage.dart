@@ -16,7 +16,6 @@ class _LocatorPageState extends State<LocatorPage> {
   var lat;
   var long;
 
-  
   void getCurrentLocation() async {
     var position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -54,13 +53,15 @@ class _LocatorPageState extends State<LocatorPage> {
         title: Text("Location"),
       ),
       body: SingleChildScrollView(
-              child: Container(
+        child: Container(
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 120,),
+                SizedBox(
+                  height: 120,
+                ),
                 Icon(
                   Icons.location_on,
                   size: 46.0,
@@ -104,7 +105,9 @@ class _LocatorPageState extends State<LocatorPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
-                          inputFormatters: [LengthLimitingTextInputFormatter(10)],
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(10)
+                          ],
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -112,8 +115,8 @@ class _LocatorPageState extends State<LocatorPage> {
                               color: Colors.green,
                             )),
                             enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(7.0)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(7.0)),
                                 borderSide: BorderSide(
                                   color: Colors.green,
                                 )),
@@ -155,7 +158,7 @@ class _LocatorPageState extends State<LocatorPage> {
                 )
               ],
             ),
-             ),
+          ),
         ),
       ),
     );

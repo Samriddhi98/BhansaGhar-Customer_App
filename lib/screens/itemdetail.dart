@@ -1,6 +1,7 @@
 //widgets
 
 import 'package:BhansaGhar/widgets/description.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 //providers
 import 'package:provider/provider.dart';
@@ -28,6 +29,7 @@ class _ItemDetailState extends State<ItemDetail> {
     // final isFav = product['isfav'];
     final loadedFood = Provider.of<FoodProductsList>(context, listen: false)
         .findById(productId);
+
     // final food = Provider.of<Foodproduct>(context,listen: false);
     final cart = Provider.of<Cart>(context);
     final deviceSize = MediaQuery.of(context).size;
@@ -84,10 +86,22 @@ class _ItemDetailState extends State<ItemDetail> {
                             height: 200.0,
                             width: MediaQuery.of(context).size.width,
                             color: Colors.red,
-                            child: Image.asset(
-                              loadedFood.image,
-                              fit: BoxFit.cover,
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) => Container(
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
+                              imageUrl:
+                                  'http://192.168.2.229:5000/uploads/${loadedFood.image}',
+                              // 'http://10.0.2.2:5000/uploads/${loadedFood.image}',
+                              fit: BoxFit.fill,
                             ),
+
+                            // child: Image.network(
+                            //   loadedFood.image,
+                            //   fit: BoxFit.cover,
+                            // ),
                           ),
                         )
                       ],
@@ -114,19 +128,25 @@ class _ItemDetailState extends State<ItemDetail> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
                               Text(
-                                'By: ' "${loadedFood.chefname.name}",
+                                'By: ' "${loadedFood.chefdetail.name}",
                                 style: TextStyle(
                                   color: Colors.grey,
-                                  fontSize: 14.0,
+                                  fontSize: 16.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
                               Text(
-                                'From:' "${loadedFood.chefname.location}",
+                                'From:' "${loadedFood.chefdetail.location}",
                                 style: TextStyle(
                                   color: Colors.grey,
-                                  fontSize: 14.0,
+                                  fontSize: 16.0,
                                   fontWeight: FontWeight.normal,
                                 ),
                               )
@@ -165,7 +185,8 @@ class _ItemDetailState extends State<ItemDetail> {
                               loadedFood.id,
                               double.parse(loadedFood.price.toString()),
                               loadedFood.title,
-                              loadedFood.image);
+                              loadedFood.image,
+                              loadedFood.chefdetail);
                           cart.getTotalPrice();
                           Scaffold.of(context).hideCurrentSnackBar();
                           Scaffold.of(context).showSnackBar(

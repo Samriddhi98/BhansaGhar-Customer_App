@@ -7,8 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class FavService {
   // String baseUrl = "https://bhansagharapi.herokuapp.com";
-  // String baseUrl = "http://192.168.2.229:5000";
-  String baseUrl = "http://10.0.2.2:5000";
+  String baseUrl = "http://192.168.2.229:5000";
+  //String baseUrl = "http://10.0.2.2:5000";
   Dio dio = Dio();
 
   String token;

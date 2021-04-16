@@ -51,6 +51,16 @@ class _MenuPageState extends State<MenuPage>
     }).toList();
   }
 
+  clearAll() {
+    all = [];
+    veg = [];
+    nonveg = [];
+    breakfast = [];
+
+    lunch = [];
+    dinner = [];
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<bool> _onBackPressed() {
@@ -87,199 +97,212 @@ class _MenuPageState extends State<MenuPage>
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         drawer: NavDrawer(),
-        body: Column(
-          children: <Widget>[
-            InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchPage()));
-                },
-                child: SearchBar()),
-            TabBar(
-              isScrollable: true,
-              tabs: catlist,
-              controller: tabController,
-            ),
-            Consumer<FoodProductsList>(
-              builder: (context, value, _) {
-                if (value.listOfProduct != null &&
-                    value.listOfProduct.length != 0) {
-                  // value.listOfProduct.forEach((c) {
-                  //   if (c.category.toLowerCase() ==
-                  //       categoryName1
-                  //           // "veg"
-                  //           .toLowerCase()) {
-                  //     foodlist.add(c);
-                  //   }
-                  // });
-                  for (Foodproduct f in value.listOfProduct) {
-                    all.add(f);
-                    print("adasdf");
-                    if (f.category == "veg") {
-                      print("asd");
-                      veg.add(f);
-                    } else if (f.category == "non-veg") {
-                      nonveg.add(f);
-                    } else if (f.category == "breakfast") {
-                      breakfast.add(f);
-                    } else if (f.category == "lunch") {
-                      lunch.add(f);
-                    } else if (f.category == "dinner") {
-                      dinner.add(f);
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SearchPage()));
+                  },
+                  child: SearchBar()),
+              TabBar(
+                isScrollable: true,
+                tabs: catlist,
+                controller: tabController,
+              ),
+              Consumer<FoodProductsList>(
+                builder: (context, value, _) {
+                  if (value.listOfProduct != null &&
+                      value.listOfProduct.length != 0) {
+                    // value.listOfProduct.forEach((c) {
+                    //   if (c.category.toLowerCase() ==
+                    //       categoryName1
+                    //           // "veg"
+                    //           .toLowerCase()) {
+                    //     foodlist.add(c);
+                    //   }
+                    // });
+                    clearAll();
+                    for (Foodproduct f in value.listOfProduct) {
+                      all.add(f);
+                      print("adasdf");
+                      if (f.category == "veg") {
+                        print("asd");
+                        veg.add(f);
+                      } else if (f.category == "non-veg") {
+                        nonveg.add(f);
+                      }
+                      if (f.type.contains("breakfast")) {
+                        breakfast.add(f);
+                      }
+                      if (f.type.contains("lunch")) {
+                        lunch.add(f);
+                      }
+                      if (f.type.contains("dinner")) {
+                        dinner.add(f);
+                      }
                     }
+
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: TabBarView(
+                                controller: tabController,
+                                children: [
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.8,
+                                    child: ListView.builder(
+                                        itemCount: all.length,
+                                        // all.length,
+                                        itemBuilder: (ctx, i) {
+                                          // print(all[i].category);
+                                          return ChangeNotifierProvider.value(
+                                              value:
+                                                  // widget.category != null && widget.category != "All"
+                                                  //     ? foodlist[i]
+                                                  //     :
+                                                  // all[i],
+                                                  all[i],
+                                              child: Container(
+                                                  child: Column(
+                                                children: [
+                                                  // Text(
+                                                  //   widget.category == null ? "Null" : "cate",
+                                                  // ),
+                                                  MenuItem()
+                                                ],
+                                              )));
+                                        }),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.7,
+                                    child: ListView.builder(
+                                        itemCount: nonveg.length,
+                                        // all.length,
+                                        itemBuilder: (ctx, i) {
+                                          // print(all[i].category);
+                                          return ChangeNotifierProvider.value(
+                                              value: nonveg[i],
+                                              child: Container(
+                                                  child: Column(
+                                                children: [MenuItem()],
+                                              )));
+                                        }),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.7,
+                                    child: ListView.builder(
+                                        itemCount: veg.length,
+                                        // all.length,
+                                        itemBuilder: (ctx, i) {
+                                          // print(all[i].category);
+                                          return ChangeNotifierProvider.value(
+                                              value: veg[i],
+                                              child: Container(
+                                                  child: Column(
+                                                children: [MenuItem()],
+                                              )));
+                                        }),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.7,
+                                    child: ListView.builder(
+                                        itemCount: breakfast.length,
+                                        // all.length,
+                                        itemBuilder: (ctx, i) {
+                                          // print(all[i].category);
+                                          return ChangeNotifierProvider.value(
+                                              value: breakfast[i],
+                                              child: Container(
+                                                  child: Column(
+                                                children: [MenuItem()],
+                                              )));
+                                        }),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.7,
+                                    child: ListView.builder(
+                                        itemCount: lunch.length,
+                                        // all.length,
+                                        itemBuilder: (ctx, i) {
+                                          // print(all[i].category);
+                                          return ChangeNotifierProvider.value(
+                                              value: lunch[i],
+                                              child: Container(
+                                                  child: Column(
+                                                children: [MenuItem()],
+                                              )));
+                                        }),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.7,
+                                    child: ListView.builder(
+                                        itemCount: dinner.length,
+                                        // all.length,
+                                        itemBuilder: (ctx, i) {
+                                          // print(all[i].category);
+                                          return ChangeNotifierProvider.value(
+                                              value: dinner[i],
+                                              child: Container(
+                                                  child: Column(
+                                                children: [MenuItem()],
+                                              )));
+                                        }),
+                                  )
+                                ]),
+                          ),
+                        ],
+                      ),
+                    );
+
+                    // return Expanded(
+                    //   child: Container(
+                    //     margin: EdgeInsets.only(
+                    //         left: 10.0, right: 10.0, bottom: 10.0, top: 2.0),
+                    //     child: ListView.builder(
+                    //         itemCount:
+                    //             // foodlist.length,
+                    //             value.listOfProduct.length,
+                    //         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+                    //             value:
+                    //                 // widget.category != null && widget.category != "All"
+                    //                 //     ? foodlist[i]
+                    //                 //     :
+                    //                 value.listOfProduct[i],
+                    //             // foodlist[i],
+                    //             child: Container(
+                    //                 child: Column(
+                    //               children: [
+                    //                 // Text(
+                    //                 //   widget.category == null ? "Null" : "cate",
+                    //                 // ),
+                    //                 MenuItem()
+                    //               ],
+                    //             )))),
+                    //   ),
+                    // );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.blueGrey,
+                      ),
+                    );
                   }
+                },
+              ),
 
-                  return Container(
-                    height: MediaQuery.of(context).size.height * 0.7,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child:
-                              TabBarView(controller: tabController, children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.8,
-                              child: ListView.builder(
-                                  itemCount: all.length,
-                                  // all.length,
-                                  itemBuilder: (ctx, i) {
-                                    // print(all[i].category);
-                                    return ChangeNotifierProvider.value(
-                                        value:
-                                            // widget.category != null && widget.category != "All"
-                                            //     ? foodlist[i]
-                                            //     :
-                                            // all[i],
-                                            all[i],
-                                        child: Container(
-                                            child: Column(
-                                          children: [
-                                            // Text(
-                                            //   widget.category == null ? "Null" : "cate",
-                                            // ),
-                                            MenuItem()
-                                          ],
-                                        )));
-                                  }),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.7,
-                              child: ListView.builder(
-                                  itemCount: nonveg.length,
-                                  // all.length,
-                                  itemBuilder: (ctx, i) {
-                                    // print(all[i].category);
-                                    return ChangeNotifierProvider.value(
-                                        value: nonveg[i],
-                                        child: Container(
-                                            child: Column(
-                                          children: [MenuItem()],
-                                        )));
-                                  }),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.7,
-                              child: ListView.builder(
-                                  itemCount: veg.length,
-                                  // all.length,
-                                  itemBuilder: (ctx, i) {
-                                    // print(all[i].category);
-                                    return ChangeNotifierProvider.value(
-                                        value: veg[i],
-                                        child: Container(
-                                            child: Column(
-                                          children: [MenuItem()],
-                                        )));
-                                  }),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.7,
-                              child: ListView.builder(
-                                  itemCount: breakfast.length,
-                                  // all.length,
-                                  itemBuilder: (ctx, i) {
-                                    // print(all[i].category);
-                                    return ChangeNotifierProvider.value(
-                                        value: breakfast[i],
-                                        child: Container(
-                                            child: Column(
-                                          children: [MenuItem()],
-                                        )));
-                                  }),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.7,
-                              child: ListView.builder(
-                                  itemCount: lunch.length,
-                                  // all.length,
-                                  itemBuilder: (ctx, i) {
-                                    // print(all[i].category);
-                                    return ChangeNotifierProvider.value(
-                                        value: lunch[i],
-                                        child: Container(
-                                            child: Column(
-                                          children: [MenuItem()],
-                                        )));
-                                  }),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.7,
-                              child: ListView.builder(
-                                  itemCount: dinner.length,
-                                  // all.length,
-                                  itemBuilder: (ctx, i) {
-                                    // print(all[i].category);
-                                    return ChangeNotifierProvider.value(
-                                        value: dinner[i],
-                                        child: Container(
-                                            child: Column(
-                                          children: [MenuItem()],
-                                        )));
-                                  }),
-                            )
-                          ]),
-                        ),
-                      ],
-                    ),
-                  );
-
-                  // return Expanded(
-                  //   child: Container(
-                  //     margin: EdgeInsets.only(
-                  //         left: 10.0, right: 10.0, bottom: 10.0, top: 2.0),
-                  //     child: ListView.builder(
-                  //         itemCount:
-                  //             // foodlist.length,
-                  //             value.listOfProduct.length,
-                  //         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-                  //             value:
-                  //                 // widget.category != null && widget.category != "All"
-                  //                 //     ? foodlist[i]
-                  //                 //     :
-                  //                 value.listOfProduct[i],
-                  //             // foodlist[i],
-                  //             child: Container(
-                  //                 child: Column(
-                  //               children: [
-                  //                 // Text(
-                  //                 //   widget.category == null ? "Null" : "cate",
-                  //                 // ),
-                  //                 MenuItem()
-                  //               ],
-                  //             )))),
-                  //   ),
-                  // );
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: Colors.blueGrey,
-                    ),
-                  );
-                }
-              },
-            ),
-
-            // SizedBox(height: 5.0),
-          ],
+              // SizedBox(height: 5.0),
+            ],
+          ),
         ),
       ),
     );

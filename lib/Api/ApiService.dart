@@ -10,9 +10,9 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  // String baseUrl = "http://192.168.2.229:5000";
+  String baseUrl = "http://192.168.2.229:5000";
 //  String baseUrl = "https://bhansagharapi.herokuapp.com";
-  String baseUrl = "http://10.0.2.2:5000";
+//  String baseUrl = "http://10.0.2.2:5000";
   Dio dio = Dio();
 
   String token;
@@ -127,71 +127,6 @@ class ApiService {
     return user;
   }
 
-  // Future<Response> registerUser(RegisterModel rm) async {
-  //   String endPoint = "/api/v1/users/register";
-  //   String url = baseUrl + endPoint;
-  //   List<dynamic> responseData;
-  //   List<RegisterModel> registermodelData;
-  //   print('sign up password :${rm.password}');
-
-  //   Response response;
-  //   try {
-  //     dio.options.headers['Content-Type'] = 'application/json';
-  //     response = await dio.post(url,
-  //         options: Options(
-  //             headers: {HttpHeaders.contentTypeHeader: 'application/json'}),
-  //         data: {
-  //           "username": "${rm.username}",
-  //           "email": "${rm.email}",
-  //           "password": " ${rm.password}"
-  //         });
-
-  //     if (response.statusCode == 200) {
-  //       // registermodelData =
-  //       //     responseData.map((e) => RegisterModel.fromJson(e)).toList();
-  //       print(response.data);
-  //       return response;
-  //     }
-  //   } catch (e) {
-  //     print("Errrorr aaayo! k error aayo ta? ${e}");
-  //     DioError err;
-  //     err = e;
-  //     print(err.response);
-  //     return err.response;
-  //   }
-
-  //   return response;
-  // }
-
-  // Future<Response> postUsers(LoginModel login) async {
-  //   String endPoint = "/api/v1/users/login";
-  //   String url = baseUrl + endPoint;
-  //   List<dynamic> responseData;
-  //   List<LoginModel> loginmodelData;
-  //   Response response;
-  //   try {
-  //     response = await dio.post(url,
-  //         options: Options(
-  //             headers: {HttpHeaders.contentTypeHeader: 'application/json'}),
-  //         data: {"email": "${login.email}", "password": " ${login.password}"});
-
-  //     if (response.statusCode == 200) {
-  //       // registermodelData =
-  //       //     responseData.map((e) => RegisterModel.fromJson(e)).toList();
-  //       print(response.data);
-  //       return response;
-  //     }
-  //   } catch (e) {
-  //     print("Error ${e}");
-  //     DioError err;
-  //     err = e;
-  //     print(err.response);
-  //     return Response(statusCode: 200, data: {'token': 'token'});
-  //   }
-
-  //   return response;
-  // }
-
   Future<Response> postUserLogin(LoginModel lm) async {
     String endPoint = "/api/v1/users/login";
     String url = baseUrl + endPoint;
@@ -256,41 +191,10 @@ class ApiService {
     return response;
   }
 
-  Future<Response> getDetail(String token) async {
-    String endPoint = "/api/v1/users/me";
-    String url = baseUrl + endPoint;
-
-    Response response;
-    try {
-      response = await dio.post(
-        url,
-        options: Options(headers: {
-          HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.authorizationHeader: "Bearer $token"
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        // registermodelData =
-        //     responseData.map((e) => RegisterModel.fromJson(e)).toList();
-        print(response.data);
-        return response;
-      }
-    } catch (e) {
-      print("Error ${e}");
-      DioError err;
-      err = e;
-      print(err.response);
-      return Response(statusCode: 200, data: {'token': 'token'});
-    }
-
-    return response;
-  }
-
   Future<List<ChefModel>> getChefDetails() async {
     await setTokenvalue();
     print('token in api call in getChefDetails $token');
-    String endPoint = "/api/v1/auth/getAllChefs";
+    String endPoint = "/api/v1/auth";
     String url = baseUrl + endPoint;
     List<dynamic> responseData;
     List<ChefModel> chefData;

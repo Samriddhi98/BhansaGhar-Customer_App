@@ -29,59 +29,99 @@ class _ChefPageState extends State<ChefPage> {
                 itemCount: chefData.data.length,
                 itemBuilder: (context, index) {
                   ChefModel chef = chefData.data[index];
-                  return Container(
-                      height: deviceSize.height / 4,
-                      child: Card(
-                        elevation: 5.0,
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                width: deviceSize.width / 3,
-                                margin: EdgeInsets.all(10.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.yellow,
-                                  shape: BoxShape.circle,
+                  if (chef.role != 'admin') {
+                    return Container(
+                        height: deviceSize.height / 4,
+                        child: Card(
+                          elevation: 5.0,
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 2,
+                                child: Container(
+                                  width: deviceSize.width / 3,
+                                  margin: EdgeInsets.all(10.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 130.0,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: Container(
-                                padding: EdgeInsets.all(10.0),
-                                width: deviceSize.width / 2,
-                                color: Colors.blue,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Text(
-                                      chef.name,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16.0),
-                                    ),
-                                    Text(
-                                      'Price:',
-                                      style: TextStyle(fontSize: 14.0),
-                                    ),
-                                    Text(
-                                      'Ordered By:',
-                                      style: TextStyle(),
-                                    ),
-                                    Text(
-                                      'Time:',
-                                      style: TextStyle(fontSize: 14.0),
-                                    ),
-                                  ],
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  padding: EdgeInsets.all(10.0),
+                                  width: deviceSize.width / 2,
+                                  color: Colors.blue,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Text(
+                                        chef.name,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18.0),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.email_rounded),
+                                          SizedBox(width: 10.0),
+                                          Text(
+                                            '''${chef.email}''',
+                                            overflow: TextOverflow.visible,
+                                            maxLines: 2,
+                                            style: TextStyle(fontSize: 16.0),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.phone),
+                                          SizedBox(width: 10.0),
+                                          Text('''${chef.contact}''',
+                                              overflow: TextOverflow.visible,
+                                              maxLines: 2,
+                                              style: TextStyle(fontSize: 16.0)),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.home_work),
+                                          SizedBox(width: 10.0),
+                                          Text('''${chef.location}''',
+                                              overflow: TextOverflow.visible,
+                                              maxLines: 2,
+                                              style: TextStyle(fontSize: 16.0)),
+                                        ],
+                                      ),
+                                      // Text(
+                                      //   chef.email,
+                                      //   style: TextStyle(fontSize: 14.0),
+                                      // ),
+                                      // Text(
+                                      //   'Contact:${chef.contact}',
+                                      //   style: TextStyle(),
+                                      // ),
+                                      // Text(
+                                      //   'Location:${chef.location}',
+                                      //   style: TextStyle(fontSize: 14.0),
+                                      // ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ));
+                            ],
+                          ),
+                        ));
+                  } //put selse here
                 },
               );
             } else {

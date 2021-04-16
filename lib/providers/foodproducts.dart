@@ -10,7 +10,7 @@ class Foodproducts with ChangeNotifier {
       id: '1',
       title: 'Veg Daal Bhat',
       description: 'daal bhat tarkari',
-      chefname: ChefModel(
+      chefdetail: ChefModel(
           id: "5ffe90ba9bfa920004262bdd",
           name: "Sarita Sharma",
           location: "mahapal,lalitpur"),
@@ -26,7 +26,7 @@ class Foodproducts with ChangeNotifier {
       id: '2',
       title: 'Bara',
       description: 'lentil pancake',
-      chefname: ChefModel(
+      chefdetail: ChefModel(
           id: "5ffe90ba9bfa920004262bdd",
           name: "Sarita Sharma",
           location: "mahapal,lalitpur"),
@@ -41,7 +41,7 @@ class Foodproducts with ChangeNotifier {
       id: '3',
       title: 'French Toast ',
       description: 'with cheese',
-      chefname: ChefModel(
+      chefdetail: ChefModel(
           id: "5ffe90ba9bfa920004262bdd",
           name: "Sarita Sharma",
           location: "mahapal,lalitpur"),
@@ -56,7 +56,7 @@ class Foodproducts with ChangeNotifier {
       id: '4',
       title: 'Malpa Swari',
       description: 'daal bhat tarkari',
-      chefname: ChefModel(
+      chefdetail: ChefModel(
           id: "5ffe90ba9bfa920004262bdd",
           name: "Sarita Sharma",
           location: "mahapal,lalitpur"),

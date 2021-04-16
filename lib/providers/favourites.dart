@@ -3,6 +3,7 @@
 //     final favourites = favouritesFromJson(jsonString);
 
 import 'dart:convert';
+import 'dart:html';
 
 import 'package:flutter/cupertino.dart';
 
@@ -22,7 +23,15 @@ class Favourites extends ChangeNotifier {
   String id;
   FavouriteId favouriteId;
   String userId;
+
   int v;
+
+  List<FavouriteId> listofFavourites;
+
+  void toggleFavouriteStatus(int index) {
+    listofFavourites[index].isFavourite = !listofFavourites[index].isFavourite;
+    notifyListeners();
+  }
 
   factory Favourites.fromJson(Map<String, dynamic> json) => Favourites(
         id: json["_id"],
@@ -40,17 +49,22 @@ class Favourites extends ChangeNotifier {
 }
 
 class FavouriteId {
-  FavouriteId({
-    this.id,
-    this.name,
-    this.price,
-    this.favouriteIdId,
-  });
+  FavouriteId(
+      {this.id,
+      this.name,
+      this.price,
+      this.favouriteIdId,
+      this.photo,
+      this.image,
+      this.isFavourite = true});
 
   String id;
   String name;
   int price;
   String favouriteIdId;
+  bool isFavourite;
+  File photo;
+  String image;
 
   factory FavouriteId.fromJson(Map<String, dynamic> json) => FavouriteId(
         id: json["_id"],

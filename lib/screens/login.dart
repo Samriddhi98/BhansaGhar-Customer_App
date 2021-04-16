@@ -32,9 +32,11 @@ class _AuthScreenState extends State<AuthScreen> {
     print('sharedpreference token $a');
   }
 
-  saveIdTopref({String id}) async {
+  saveDetailsTopref({String id, String username, String email}) async {
     var preference = await SharedPreferences.getInstance();
     preference.setString("UserId", id);
+    preference.setString("Username", username);
+    preference.setString("UserEmail", email);
     String a = preference.getString("UserId");
     print('UserId $a');
   }
@@ -181,7 +183,10 @@ class _AuthScreenState extends State<AuthScreen> {
                     saveTopref(value.data['token']);
                     ApiService().getUserDetails().then((value) {
                       print('user ko id :${value.id}');
-                      saveIdTopref(id: value.id);
+                      saveDetailsTopref(
+                          id: value.id,
+                          username: value.username,
+                          email: value.email);
                     });
 
                     Navigator.pop(context);
