@@ -1,5 +1,7 @@
+import 'package:BhansaGhar/Api/OrderService.dart';
 import 'package:BhansaGhar/providers/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 //custom widgets
@@ -7,6 +9,7 @@ import 'package:BhansaGhar/widgets/order_card.dart';
 
 //providers
 import 'package:BhansaGhar/providers/counter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'checkout.dart';
 import 'locatorpage.dart';
 
@@ -16,12 +19,24 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  String chefId;
+
+  saveOrderIdTopref(String orderId) async {
+    print('OrderID:' + orderId);
+    var preference = await SharedPreferences.getInstance();
+    preference.setString("OrderID", orderId);
+  }
+
   @override
   Widget build(BuildContext context) {
     // final counterModel = Provider.of<Counter>(context);
     final cart = Provider.of<Cart>(context);
+    List<CartItem> cartItem = [];
+    print('cart items:$cart');
+
     final deviceSize = MediaQuery.of(context).size;
     int total = cart.totalPrice;
+
     return WillPopScope(
       onWillPop: () {
         Navigator.of(context).pushNamed('/main-screen');
@@ -54,6 +69,7 @@ class _OrderPageState extends State<OrderPage> {
                 itemCount: cart.items.length,
                 itemBuilder: (ctx, i) => ChangeNotifierProvider<Counter>(
                   create: (context) => Counter(),
+
                   child: OrderCard(
                     cart.items.values.toList()[i].id,
                     cart.items.keys.toList()[i],
@@ -62,6 +78,7 @@ class _OrderPageState extends State<OrderPage> {
                     cart.items.values.toList()[i].title,
                     cart.items.values.toList()[i].image,
                   ),
+                  //  chefId = cart.items.values[i].chefid,
                 ),
                 padding: EdgeInsets.symmetric(
                   horizontal: 10.0,
@@ -108,7 +125,34 @@ class _OrderPageState extends State<OrderPage> {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).pushNamed('/locatorpage');
+                if (cart.items.length == 0) {
+                  Fluttertoast.showToast(
+                    msg: 'Your cart is empty',
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.grey,
+                    textColor: Colors.white,
+                    fontSize: 10.0,
+                  );
+                } else {
+                  chefId = cart.items.values.toList()[0].chefid;
+
+                  // OrderService().addToOrder(chefId).then((value) {
+                  //   print('order ID:${value.orderModelId}');
+                  //   // OrderService()
+                  //   //     .addToOrderCheckout(value.orderModelId, cart)
+                  //   //     .then((value) => null);
+
+                  //   //  print('order id: ${value.data['id']}');
+                  //   // saveOrderIdTopref(value.data['id']);
+                  //   // OrderService().
+                  // });
+
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => LocatorPage()));
+                  Navigator.of(context).pushNamed('/locatorpage');
+                }
               },
             ),
           ],

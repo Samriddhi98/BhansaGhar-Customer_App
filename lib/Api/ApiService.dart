@@ -10,9 +10,11 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  String baseUrl = "http://192.168.2.229:5000";
-//  String baseUrl = "https://bhansagharapi.herokuapp.com";
-//  String baseUrl = "http://10.0.2.2:5000";
+  // String baseUrl = "http://192.168.1.121:5000";
+
+  String baseUrl = "http://10.0.2.2:5000";
+  // String baseUrl = "http://172.25.0.174:5000";
+
   Dio dio = Dio();
 
   String token;
@@ -68,12 +70,11 @@ class ApiService {
           data: {
             "username": "${rm.username}",
             "email": "${rm.email}",
+            "contact": "${rm.contact}",
             "password": "${rm.password}",
           });
 
       if (response.statusCode == 200) {
-        // registermodelData =
-        //     responseData.map((e) => RegisterModel.fromJson(e)).toList();
         print(response.data);
         return response;
       }
@@ -141,6 +142,7 @@ class ApiService {
           data: {
             // "username": "${lm.username}",
             "email": "${lm.email}",
+            "contact": "${lm.contact}",
             "password": "${lm.password}",
           });
 

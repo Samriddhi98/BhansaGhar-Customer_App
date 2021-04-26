@@ -3,7 +3,7 @@
 //     final favourites = favouritesFromJson(jsonString);
 
 import 'dart:convert';
-import 'dart:html';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 
@@ -63,12 +63,13 @@ class FavouriteId {
   int price;
   String favouriteIdId;
   bool isFavourite;
-  File photo;
+  String photo;
   String image;
 
   factory FavouriteId.fromJson(Map<String, dynamic> json) => FavouriteId(
         id: json["_id"],
         name: json["name"],
+        photo: json["photo"],
         price: json["price"],
         favouriteIdId: json["id"],
       );
@@ -76,6 +77,7 @@ class FavouriteId {
   Map<String, dynamic> toJson() => {
         "_id": id,
         "name": name,
+        "photo": photo,
         "price": price,
         "id": favouriteIdId,
       };

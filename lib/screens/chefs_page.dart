@@ -47,7 +47,7 @@ class _ChefPageState extends State<ChefPage> {
                                   ),
                                   child: Icon(
                                     Icons.person,
-                                    size: 130.0,
+                                    size: 90.0,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -57,7 +57,7 @@ class _ChefPageState extends State<ChefPage> {
                                 child: Container(
                                   padding: EdgeInsets.all(10.0),
                                   width: deviceSize.width / 2,
-                                  color: Colors.blue,
+                                  //  color: Colors.blue,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -74,11 +74,13 @@ class _ChefPageState extends State<ChefPage> {
                                         children: [
                                           Icon(Icons.email_rounded),
                                           SizedBox(width: 10.0),
-                                          Text(
-                                            '''${chef.email}''',
-                                            overflow: TextOverflow.visible,
-                                            maxLines: 2,
-                                            style: TextStyle(fontSize: 16.0),
+                                          Expanded(
+                                            child: Text(
+                                              '''${chef.email}''',
+                                              overflow: TextOverflow.visible,
+                                              maxLines: 2,
+                                              style: TextStyle(fontSize: 16.0),
+                                            ),
                                           ),
                                         ],
                                       ),

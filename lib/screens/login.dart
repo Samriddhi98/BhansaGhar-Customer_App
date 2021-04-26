@@ -20,11 +20,12 @@ class _AuthScreenState extends State<AuthScreen> {
 
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController contact = TextEditingController();
 
   bool _togglevisibility = true;
 
   saveTopref(String token) async {
-    print('hello');
+    // print('hello');
     print('token:' + token);
     var preference = await SharedPreferences.getInstance();
     preference.setString("token", token);
@@ -89,12 +90,38 @@ class _AuthScreenState extends State<AuthScreen> {
                             //   return "Email is invalid";
                             // }
                           } else {
-                            return "Email cannot be empty";
+                            return "   Email cannot be empty";
                           }
                         },
                         decoration: InputDecoration(
-                          hintText: "Username or email",
+                          hintText: "Email",
                           prefixIcon: Icon(Icons.mail_outline),
+                          border: InputBorder.none,
+                        ),
+                      )),
+                  SizedBox(height: 15.0),
+                  Card(
+                      elevation: 10.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: TextFormField(
+                        controller: contact,
+                        validator: (value) {
+                          if (value.isNotEmpty) {
+                            // print(value);
+                            // bool valid = EmailValidator.validate(value);
+                            // print(valid);
+                            // if (!valid) {
+                            //   return "Email is invalid";
+                            // }
+                          } else {
+                            return "    Contactno. cannot be empty";
+                          }
+                        },
+                        decoration: InputDecoration(
+                          hintText: "Contact no.",
+                          prefixIcon: Icon(Icons.phone),
                           border: InputBorder.none,
                         ),
                       )),
@@ -108,7 +135,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       controller: password,
                       validator: (value) {
                         if (value.isEmpty) {
-                          return "Password required";
+                          return "    Password required";
                         }
                       },
                       decoration: InputDecoration(
@@ -137,20 +164,20 @@ class _AuthScreenState extends State<AuthScreen> {
           //   SizedBox(
           //  height: 5.0,
           // ),
-          Container(
-            padding: EdgeInsets.only(top: 15.0, right: 20.0),
-            alignment: Alignment(1.0, 0.0),
-            // color: Colors.blue,
-            child: InkWell(
-              child: Text(
-                'Forgot Password',
-                style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline),
-              ),
-            ),
-          ),
+          // Container(
+          //   padding: EdgeInsets.only(top: 15.0, right: 20.0),
+          //   alignment: Alignment(1.0, 0.0),
+          //   // color: Colors.blue,
+          //   child: InkWell(
+          //     child: Text(
+          //       'Forgot Password',
+          //       style: TextStyle(
+          //           color: Colors.red,
+          //           fontWeight: FontWeight.bold,
+          //           decoration: TextDecoration.underline),
+          //     ),
+          //   ),
+          // ),
           SizedBox(height: 30.0),
           InkWell(
             child: Container(
@@ -261,36 +288,36 @@ class _AuthScreenState extends State<AuthScreen> {
           //   ),
           // ),
           SizedBox(height: 20.0),
-          Container(
-            height: 40.0,
-            width: 350.0,
-            color: Colors.transparent,
-            child: Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black,
-                      style: BorderStyle.solid,
-                      width: 1.0,
-                    ),
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(20.0)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Center(
-                      child:
-                          ImageIcon(AssetImage('assets/images/facebook.png')),
-                    ),
-                    SizedBox(width: 10.0),
-                    Center(
-                      child: Text(
-                        'Log in with facebook',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  ],
-                )),
-          ),
+          // Container(
+          //   height: 40.0,
+          //   width: 350.0,
+          //   color: Colors.transparent,
+          //   child: Container(
+          //       decoration: BoxDecoration(
+          //           border: Border.all(
+          //             color: Colors.black,
+          //             style: BorderStyle.solid,
+          //             width: 1.0,
+          //           ),
+          //           color: Colors.transparent,
+          //           borderRadius: BorderRadius.circular(20.0)),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.center,
+          //         children: <Widget>[
+          //           Center(
+          //             child:
+          //                 ImageIcon(AssetImage('assets/images/facebook.png')),
+          //           ),
+          //           SizedBox(width: 10.0),
+          //           Center(
+          //             child: Text(
+          //               'Log in with facebook',
+          //               style: TextStyle(fontWeight: FontWeight.bold),
+          //             ),
+          //           )
+          //         ],
+          //       )),
+          // ),
           SizedBox(height: 15.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

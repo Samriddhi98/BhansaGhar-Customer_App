@@ -93,7 +93,7 @@ class _MyFavoritesState extends State<MyFavorites> {
                           Container(
                             height: 200.0,
                             width: deviceSize.width,
-                            color: Colors.red,
+                            //   color: Colors.red,
                             // child: Image.network(
                             //   // "https://bhansagharapi.herokuapp.com/uploads/${favItems.image}",
                             //   fit: BoxFit.cover,
@@ -105,8 +105,8 @@ class _MyFavoritesState extends State<MyFavorites> {
                                 ),
                               ),
                               imageUrl:
-                                  'http://192.168.2.229:5000/uploads/${favItems.favouriteId.image}',
-                              // 'http://10.0.2.2:5000/uploads/${loadedFood.image}',
+                                  // 'http://192.168.1.121:5000/uploads/${favItems.favouriteId.photo}',
+                                  'http://10.0.2.2:5000/uploads/${favItems.favouriteId.photo}',
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -228,18 +228,13 @@ class _MyFavoritesState extends State<MyFavorites> {
                                 Column(
                                   children: <Widget>[
                                     Text(
-                                      'price',
+                                      'Rs.${(favItems.favouriteId.price).toString()}' ??
+                                          'price',
                                       // 'Rs. ${favItems.food.price.toString()}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.yellowAccent,
                                         fontSize: 18.0,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Min Order',
-                                      style: TextStyle(
-                                        color: Colors.grey,
                                       ),
                                     ),
                                   ],

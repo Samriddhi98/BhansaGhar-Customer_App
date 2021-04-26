@@ -93,8 +93,9 @@ class _ItemDetailState extends State<ItemDetail> {
                                 ),
                               ),
                               imageUrl:
-                                  'http://192.168.2.229:5000/uploads/${loadedFood.image}',
-                              // 'http://10.0.2.2:5000/uploads/${loadedFood.image}',
+                                  //   'http://192.168.1.121:5000/uploads/${loadedFood.image}',
+                                  'http://10.0.2.2:5000/uploads/${loadedFood.image}',
+                              //'http://172.25.0.174:5000/uploads/${loadedFood.image}',
                               fit: BoxFit.fill,
                             ),
 
@@ -181,26 +182,37 @@ class _ItemDetailState extends State<ItemDetail> {
                       width: 350.0,
                       child: GestureDetector(
                         onTap: () {
-                          cart.addItem(
-                              loadedFood.id,
-                              double.parse(loadedFood.price.toString()),
-                              loadedFood.title,
-                              loadedFood.image,
-                              loadedFood.chefdetail);
-                          cart.getTotalPrice();
-                          Scaffold.of(context).hideCurrentSnackBar();
-                          Scaffold.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Added item to Cart'),
-                              duration: Duration(seconds: 2),
-                              action: SnackBarAction(
-                                  label: 'UNDO',
-                                  textColor: Colors.white,
-                                  onPressed: () {
-                                    cart.removeSingleItem(loadedFood.id);
-                                  }),
-                            ),
-                          );
+                          try {
+                            cart.addItem(
+                                loadedFood.id,
+                                double.parse(loadedFood.price.toString()),
+                                loadedFood.title,
+                                loadedFood.image,
+                                loadedFood.chefdetail);
+                            cart.increaseCount(loadedFood.id);
+                            cart.getTotalPrice();
+                            Scaffold.of(context).hideCurrentSnackBar();
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Added item to Cart'),
+                                duration: Duration(seconds: 2),
+                                action: SnackBarAction(
+                                    label: 'UNDO',
+                                    textColor: Colors.white,
+                                    onPressed: () {
+                                      cart.removeSingleItem(loadedFood.id);
+                                    }),
+                              ),
+                            );
+                          } catch (e) {
+                            Scaffold.of(context).hideCurrentSnackBar();
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(e.message),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                          }
                         },
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),

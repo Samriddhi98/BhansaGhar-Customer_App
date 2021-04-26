@@ -20,7 +20,8 @@ class OrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final counterModel = Provider.of<Counter>(context);
     final cart = Provider.of<Cart>(context);
-    final String total = (price * counterModel.getCounter()).toString();
+    //final String total = (price * counterModel.getCounter()).toString();
+    final String total = (price * quantity).toString();
     return Dismissible(
       key: ValueKey(id),
       background: Container(
@@ -82,8 +83,11 @@ class OrderCard extends StatelessWidget {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        cart.increaseTotalFromCounter(price: price);
-                        counterModel.incrementCounter();
+                        //cart.increaseTotalFromCounter(price: price);
+                        // cart.addItem(productid:productId, price:price, title:title, image:image, chef:chef)
+                        cart.increaseCount(productId);
+                        // counterModel.incrementCounter();
+                        cart.getTotalPrice();
                       },
                       child: Icon(
                         Icons.keyboard_arrow_up,
@@ -91,7 +95,8 @@ class OrderCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      counterModel.getCounter().toString(),
+                      // counterModel.getCounter().toString(),
+                      quantity.toString(),
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -99,9 +104,11 @@ class OrderCard extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        cart.decreaseTotalFromCounter(
-                            price: price, counter: counterModel.getCounter());
-                        counterModel.decrementCounter();
+                        // cart.decreaseTotalFromCounter(
+                        //     price: price, counter: counterModel.getCounter());
+                        //  counterModel.decrementCounter();
+                        cart.decreaseCount(productId);
+                        cart.getTotalPrice();
                       },
                       child: Icon(
                         Icons.keyboard_arrow_down,
@@ -136,8 +143,8 @@ class OrderCard extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     ),
                   ),
-                  imageUrl: 'http://192.168.2.229:5000/uploads/${image}',
-                  //'http://10.0.2.2:5000/uploads/${image}',
+                  imageUrl: //'http://172.25.0.174:5000/uploads/${image}',
+                      'http://10.0.2.2:5000/uploads/${image}',
                   fit: BoxFit.fill,
                 ),
               ),

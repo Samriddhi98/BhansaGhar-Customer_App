@@ -58,8 +58,9 @@ class _MenuItemState extends State<MenuItem> {
                       ),
                     ),
                     imageUrl:
-                        'http://192.168.2.229:5000/uploads/${product.image}',
-                    //  'http://10.0.2.2:5000/uploads//${product.image}',
+                        //   'http://192.168.2.229:5000/uploads/${product.image}',
+                        'http://10.0.2.2:5000/uploads//${product.image}',
+                    // 'http://172.25.0.174:5000/uploads//${product.image}',
                     fit: BoxFit.fill,
                   ),
                   //Image.network(
@@ -165,42 +166,42 @@ class _MenuItemState extends State<MenuItem> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.star,
-                                color: Theme.of(context).primaryColor,
-                                size: 16.0,
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Theme.of(context).primaryColor,
-                                size: 16.0,
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Theme.of(context).primaryColor,
-                                size: 16.0,
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Theme.of(context).primaryColor,
-                                size: 16.0,
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: Theme.of(context).primaryColor,
-                                size: 16.0,
-                              ),
-                              SizedBox(width: 10.0),
-                              Text(
-                                '(' + product.rating.toString() + 'Reviews)',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              )
-                            ],
-                          )
+                          // Row(
+                          //   children: <Widget>[
+                          //     Icon(
+                          //       Icons.star,
+                          //       color: Theme.of(context).primaryColor,
+                          //       size: 16.0,
+                          //     ),
+                          //     Icon(
+                          //       Icons.star,
+                          //       color: Theme.of(context).primaryColor,
+                          //       size: 16.0,
+                          //     ),
+                          //     Icon(
+                          //       Icons.star,
+                          //       color: Theme.of(context).primaryColor,
+                          //       size: 16.0,
+                          //     ),
+                          //     Icon(
+                          //       Icons.star,
+                          //       color: Theme.of(context).primaryColor,
+                          //       size: 16.0,
+                          //     ),
+                          //     Icon(
+                          //       Icons.star,
+                          //       color: Theme.of(context).primaryColor,
+                          //       size: 16.0,
+                          //     ),
+                          //     SizedBox(width: 10.0),
+                          //     Text(
+                          //       '(' + product.rating.toString() + 'Reviews)',
+                          //       style: TextStyle(
+                          //         color: Colors.grey,
+                          //       ),
+                          //     )
+                          //   ],
+                          // )
                         ],
                       ),
                       Column(

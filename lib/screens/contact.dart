@@ -6,21 +6,15 @@ class ContactPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Our Contact"),
-        
       ),
-      
-      
       body: Container(
-        
         height: 400,
         width: 400,
         padding: EdgeInsets.all(10),
         margin: const EdgeInsets.all(15.0),
         color: Colors.blue[100],
-        
         child: Column(
           children: [
-            
             rowWithContent("9863330414/9860197955", Icons.call),
             rowWithContent("bhansaghar@gmail.com", Icons.email),
             rowWithContent("Kathmandu", Icons.location_city),
@@ -36,23 +30,22 @@ class ContactPage extends StatelessWidget {
       height: 80,
       child: Row(
         children: [
-          Flexible(
-            // flex: 2,
-            child: Icon(
-              icon,
-              size: 30.0,
-            ),
+          // flex: 2,
+          Icon(
+            icon,
+            size: 30.0,
           ),
+
           SizedBox(
             width: 40.0,
           ),
-          Flexible(
-            // flex: 3,
-            child: Text(
-              text,
-              textAlign: TextAlign.start,
-              textScaleFactor: 1.0,
-            ),
+
+          // flex: 3,
+          Text(
+            text,
+            textAlign: TextAlign.start,
+            style: TextStyle(fontSize: 20.0),
+            //textScaleFactor: 1.0,
           ),
         ],
       ),
